@@ -1,12 +1,22 @@
 @charset "UTF-8";
 
-.git{
+.git {
 	color: gray;
 }
-.webtris{
+
+.webtris {
 	text-align: center;
 }
+
 font {
 	padding: 10px;
-	font-size: 50px;
+	font-size: 80px;
+}
+
+form {
+	padding: 100px;
+}
+
+form#centered-form{
+	margin: 0 auto;
 }
