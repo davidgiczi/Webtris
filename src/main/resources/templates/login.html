@@ -1,14 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <title>Webtris</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/main.css}">
+<title>W E B T R I S</title>
 </head>
 <body>
-    <h1>Hello Webtris!</h1>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light nav">
+		<div class="container-fluid">
+
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="https://github.com/davidgiczi/Webtris">GitHub</a>
+					</li>
+					
+				</ul>
+				<a class="nav-link git" href="https://github.com/davidgiczi"
+					tabindex="-1" aria-disabled="true">&copy Dávid Giczi 2021</a>
+			</div>
+		</div>
+
+	</nav>
+
+	<div class="webtris">
+		<font style="color: #DB4437">W</font> <font style="color: #4285F4">E</font>
+		<font style="color: #F4B400">B</font> <font style="color: #0F9D58">T</font>
+		<font style="color: #DB4437">R</font> <font style="color: #4285F4">I</font>
+		<font style="color: #F4B400">S</font>
+
+	</div>
+	
+
 </body>
 </html>
