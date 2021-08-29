@@ -3,14 +3,13 @@
 .git {
 	color: gray;
 }
-
-.webtris {
+.webtris{
 	text-align: center;
-}
 
+	}
 font {
 	padding: 10px;
-	font-size: 80px;
+	font-size: 45px;
 }
 
 form {
@@ -19,4 +18,7 @@ form {
 
 form#centered-form{
 	margin: 0 auto;
+}
+.right{
+	text-align: right;
 }

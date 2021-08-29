@@ -7,29 +7,30 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineEvent;
-import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class SoundPlayer implements LineListener, Runnable {
+public class SoundPlayer {
 
+	private Long id;
+	private Clip audioClip; 
 	
-	private boolean play = true;
-	
-	@Override
-	public void run() {
-		
-		while(play) {
-			playing();
-		}
-		
-	}
-	
-	public void setPlay(boolean play) {
-		this.play = play;
+	public Long getId() {
+		return id;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public void start() {
+		audioClip.start();
+	}
+	
+	public void stop() {
+		audioClip.stop();
+	}
+	
 	public void playing() {
 		  
 	        File audioFile = new File("./sound/Saltarello.wav");
@@ -41,24 +42,11 @@ public class SoundPlayer implements LineListener, Runnable {
 	 
 	            DataLine.Info info = new DataLine.Info(Clip.class, format);
 	 
-	           Clip audioClip = (Clip) AudioSystem.getLine(info);
+	            Clip audioClip = (Clip) AudioSystem.getLine(info);
 	            
-	            audioClip.addLineListener(this);
-	 
 	            audioClip.open(audioStream);
-	            
-	            audioClip.start();
 	             
-	            while (play) {
-	            	
-	                try {
-	                    Thread.sleep(1000);
-	                } catch (InterruptedException ex) {
-	                    ex.printStackTrace();
-	                }
-	            }
-	             
-	            audioClip.close();
+	            audioClip.loop(Clip.LOOP_CONTINUOUSLY);
 	                    
 	        } catch (UnsupportedAudioFileException ex) {
 	            System.out.println("The specified audio file is not supported.");
@@ -72,18 +60,5 @@ public class SoundPlayer implements LineListener, Runnable {
 	        }
 	         
 	    }
-	
-	  @Override
-		public void update(LineEvent event) {
-		  LineEvent.Type type = event.getType();
-	         
-	        if (type == LineEvent.Type.START) {
-	            System.out.println("Playback started.");
-	             
-	        } else if (type == LineEvent.Type.STOP) {
-	            System.out.println("Playback completed.");
-	        }
-			
-		}
 	  
 }
