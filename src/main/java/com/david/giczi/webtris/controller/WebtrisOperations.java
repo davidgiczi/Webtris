@@ -29,28 +29,29 @@ public class WebtrisOperations {
 		
 		String playerName = request.getParameter("playerName");
 		String birthDate = request.getParameter("birthDate");
-		//String getSound = request.getParameter("getSound");
 		
 		if(playerService.validateInputData(playerName, birthDate)) {
 			
 		Player player = playerService.getPlayerByNameAndBirthDate(playerName, birthDate);
+		
 		if(player == null) {
 			player = new Player();
 			player.setName(playerName);
 			player.setBirthDate(new SimpleDateFormat("yyyy-MM-dd").parse(birthDate));
 			playerService.save(player);
 		}
-			
-		}
-		else {
-			model.addAttribute("invalid", "INVALID INPUT DATA: "
-			+ "Your player name should be at least 3 chars and you should add the date of your birth.");
-			return "login";
-		}
 		
+		model.addAttribute("welcome", "Hi "  + player.getName() + ", you're welocme to WEBTRIS's world!\n"
+				+ "Your highest score is: " + player.getScore());
+		
+	}else {
+				model.addAttribute("invalid", "INVALID INPUT DATA: "
+				+ "Your player name should be at least 3 chars and you should add the date of your birth.");
+				return "login";
+	}
 			
 		return "gameboard";
 	}
-	
-	
 }
+	
+

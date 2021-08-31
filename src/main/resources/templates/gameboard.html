@@ -29,7 +29,8 @@
 		</div>
 	</nav>
 	
-	<h1>Welcome to Webtris!</h1>
-    
+	
+ <input type="hidden" th:if="${welcome != null}" th:value="${welcome}" name="welcome-msg" id="welcome">
+<script type="text/javascript" th:src="@{/js/webtris.js}"></script>
 </body>
 </html>
