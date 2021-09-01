@@ -15,14 +15,16 @@
 
 			<div class="col-7 col-xxl-1">
 				<a class="nav-link git" href="https://github.com/davidgiczi/Webtris"
-					tabindex="-1" aria-disabled="true" title="Webtris GitHub repository">&nbsp;&nbsp;&nbsp;GitHub</a>
+					tabindex="-1" aria-disabled="true"
+					title="Webtris GitHub repository">&nbsp;&nbsp;&nbsp;GitHub</a>
 
 			</div>
-				
-	
-		<div class="col-7 col-xxl-2 right">
+
+
+			<div class="col-7 col-xxl-2 right">
 				<a class="nav-link git" href="https://github.com/davidgiczi"
-					tabindex="-1" aria-disabled="true" title="My GitHub repository"><span>&copy;&nbsp;2021&nbsp;Dávid Giczi</span></a>
+					tabindex="-1" aria-disabled="true" title="My GitHub repository"><span>&copy;&nbsp;2021&nbsp;Dávid
+						Giczi</span></a>
 
 			</div>
 		</div>
@@ -30,44 +32,53 @@
 
 	<div class="container">
 		<div class="row">
-		
+
 			<div class="col-12 webtris">
-				<font style="color: #DB4437">W</font>
-				<font style="color: #4285F4">E</font>
-				<font style="color: #F4B400">B</font>
-				<font style="color: #0F9D58">T</font>
-				<font style="color: #DB4437">R</font>
-				<font style="color: #4285F4">I</font>
+				<font style="color: #DB4437">W</font> <font style="color: #4285F4">E</font>
+				<font style="color: #F4B400">B</font> <font style="color: #0F9D58">T</font>
+				<font style="color: #DB4437">R</font> <font style="color: #4285F4">I</font>
 				<font style="color: #F4B400">S</font>
 			</div>
 		</div>
-		
-		<div class="row">
-		<div class="col-12 col-xxl-4"></div>
-				<form th:action="@{/webtris/player-sign-in}" class="col-12 col-xxl-4" method="post">
-					<div class="mb-3">
-						<label for="exampleInputEmail1" class="form-label">Your
-							player name</label> <input type="text" class="form-control"
-							id="exampleInputEmail1" aria-describedby="emailHelp" name="playerName" title="Your nickname">
-						<div id="emailHelp" class="form-text col"></div>
-					</div>
-					<div class="mb-3">
-						<label for="exampleInputPassword1" class="form-label">Date
-							of your birth</label> <input type="date" class="form-control"
-							id="exampleInputPassword1" name="birthDate" title="Date of your birth">
-					</div>
-					<div class="mb-3 form-check">
-						<input type="checkbox" class="form-check-input" id="exampleCheck1" name="getSound" title="Dead Can Dance: Saltarello">
-						<label class="form-check-label" for="exampleCheck1">Play
-							music</label>
-					</div>
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</form>
-			</div>
-			
+
+		<div class="alert alert-primary alert-dismissible alert-danger" role="alert"
+			id="invalid-msg">
+			<strong>Invalid input data:</strong> Your player name should be at least 3 chars and you should add the date of your birth.
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
 		</div>
-		
-	<input type="hidden" th:if="${invalid != null}" th:value="${invalid}" name="invalid-msg" id="invalid">
-	<script type="text/javascript" th:src="@{/js/webtris.js}"></script>
+
+		<div class="row">
+			<div class="col-12 col-xxl-4"></div>
+
+			<form th:action="@{/webtris/player-sign-in}" class="col-12 col-xxl-4"
+				method="post">
+				<div class="mb-3">
+					<label for="exampleInputEmail1" class="form-label">Your
+						player name</label> <input type="text" class="form-control"
+						id="exampleInputEmail1" aria-describedby="emailHelp"
+						name="playerName" title="Your nickname">
+					<div id="emailHelp" class="form-text col"></div>
+				</div>
+				<div class="mb-3">
+					<label for="exampleInputPassword1" class="form-label">Date
+						of your birth</label> <input type="date" class="form-control"
+						id="exampleInputPassword1" name="birthDate"
+						title="Date of your birth">
+				</div>
+				<div class="mb-3 form-check">
+					<input type="checkbox" class="form-check-input" id="exampleCheck1"
+						name="getSound" title="Dead Can Dance: Saltarello"> <label
+						class="form-check-label" for="exampleCheck1">Play music</label>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+
+	</div>
+
+	<input type="hidden" th:if="${invalid}" name="invalid-msg" id="invalid">
+	<script type="text/javascript" th:src="@{/js/login.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
 </body>
 </html>

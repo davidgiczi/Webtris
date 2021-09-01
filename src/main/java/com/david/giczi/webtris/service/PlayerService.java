@@ -26,6 +26,13 @@ public class PlayerService {
 		return player;
 	}
 	
+	public Player getPlayerByName(String name)  {
+		
+		Player player = playerRepo.getPlayerByName(name);
+		
+		return player;
+	}
+	
 	public boolean validateInputData(String name, String birthdate) {
 		return name.trim().length() > 3 && !birthdate.isEmpty();
 	}

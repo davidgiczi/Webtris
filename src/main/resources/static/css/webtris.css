@@ -13,7 +13,7 @@ font {
 }
 
 form {
-	padding: 100px;
+	padding: 70px;
 }
 
 form#centered-form{
@@ -21,4 +21,17 @@ form#centered-form{
 }
 .right{
 	text-align: right;
+}
+
+.gameboard{
+	width: 20%;
+	margin: 0 auto;
+}
+
+td{
+	height: 25px;
+}
+
+#invalid-msg{
+	display: none;
 }

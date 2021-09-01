@@ -11,4 +11,6 @@ public interface PlayerRepository extends CrudRepository<Player, Long> {
 	
 	@Query(value = "select * from players where name like :name and birth_date like :birthdate", nativeQuery = true)
 	Player getPlayerByNameAndBirthDate(@Param("name") String name, @Param("birthdate") Date birthDate);
+	@Query(value = "select * from players where name like :name", nativeQuery = true)
+	Player getPlayerByName(@Param("name") String name);
 }
