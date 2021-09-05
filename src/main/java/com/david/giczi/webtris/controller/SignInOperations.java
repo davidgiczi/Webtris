@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.david.giczi.webtris.model.Player;
 import com.david.giczi.webtris.service.PlayerService;
 
@@ -34,7 +36,7 @@ public class SignInOperations {
 	}
 
 	@PostMapping("/player-sign-in")
-	public String signInPlayer(HttpServletRequest request, HttpServletResponse response, Model model) throws ParseException {
+	public String signInPlayer(HttpServletRequest request, HttpServletResponse response, RedirectAttributes rdAttr, Model model) throws ParseException {
 
 		String playerName = request.getParameter("playerName");
 		String birthDate = request.getParameter("birthDate");
@@ -61,8 +63,8 @@ public class SignInOperations {
 					+ "Your highest score is: " + player.getScore());
 
 		} else {
-			model.addAttribute("invalid", true);
-			return "login";
+			rdAttr.addAttribute("invalid", true);
+			return "redirect:";
 		}
 
 		return "gameboard";

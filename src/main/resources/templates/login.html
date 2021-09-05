@@ -16,14 +16,14 @@
 			<div class="col-7 col-xxl-1">
 				<a class="nav-link git" href="https://github.com/davidgiczi/Webtris"
 					tabindex="-1" aria-disabled="true"
-					title="Webtris GitHub repository">&nbsp;&nbsp;&nbsp;GitHub</a>
+					title="GitHub repository of WEBTRIS Game">&nbsp;&nbsp;&nbsp;GitHub</a>
 
 			</div>
 			
 			<div class="col-7 col-xxl-2">
 				<a class="nav-link git" href="/webtris/ranklist"
 					tabindex="-1" aria-disabled="true"
-					title="Rank list of WEBTRIS players">&nbsp;&nbsp;&nbsp;Rank List</a>
+					title="Rank list of the Game">&nbsp;&nbsp;&nbsp;Rank List</a>
 
 			</div>
 
@@ -58,7 +58,7 @@
 		<div class="row">
 			<div class="col-12 col-xxl-4"></div>
 
-			<form th:action="@{/webtris/player-sign-in}" class="col-12 col-xxl-4"
+			<form th:action="@{/webtris/player-sign-in}" class="form-control-sm col-12 col-xxl-4"
 				method="post">
 				<div class="mb-3">
 					<label for="exampleInputEmail1" class="form-label">Your
@@ -84,7 +84,7 @@
 
 	</div>
 
-	<input type="hidden" th:if="${invalid}" name="invalid-msg" id="invalid">
+	<input type="hidden" th:if="${param.invalid}" name="invalid-msg" id="invalid">
 	<script type="text/javascript" th:src="@{/js/login.js}"></script>
 	<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
 </body>
