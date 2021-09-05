@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/css/webtris.css}">
+<script src="https://kit.fontawesome.com/80a1f6de3a.js"></script>
 <title>W E B T R I S</title>
 </head>
 <body>
@@ -20,9 +21,15 @@
 					title="Webtris GitHub repository">&nbsp;&nbsp;&nbsp;GitHub</a>
 
 			</div>
+				
+				<div class="col-7 col-xxl-2">
+				<a class="nav-link git" href="/webtris/ranklist"
+					tabindex="-1" aria-disabled="true"
+					title="Rank list of WEBTRIS players">&nbsp;&nbsp;&nbsp;Rank List</a>
 
+			</div>
 
-			<div class="col-7 col-xxl-2 right">
+			<div class="col-7 col-xxl-9 right">
 				<a class="nav-link git" href="https://github.com/davidgiczi"
 					tabindex="-1" aria-disabled="true" title="My GitHub repository"><span>&copy;&nbsp;2021&nbsp;Dávid
 						Giczi</span></a>
@@ -31,7 +38,14 @@
 		</div>
 	</nav>
 
-	<br>
+<div class="containaer">
+	<div class="row">
+	<div class="col-xxl-5 col-4"></div>
+	<h4 class="col-xxl-1 col-2 git right">Score:</h4>
+	<h4 class="col-xxl-1 col-2 git">###</h4>
+	<div class="col-xxl-5 col-4"></div>
+	</div>
+</div>
 
 	<div class="table-responsive">
 		<table class="table table-bordered gameboard">
@@ -41,6 +55,31 @@
 
 			</tbody>
 		</table>
+	</div>
+	<br>
+	<div class="containaer">
+	<div class="row">
+	<div class="col-xxl-5 col-5"> </div>
+	<button type="button" class="btn btn-outline-danger col-xxl-2 col-2 fas fa-sync-alt"></button>
+	<div class="col-xxl-5 col-5"> </div>
+	</div>
+	
+	<div class="row">
+	<div class="col-xxl-3 col-2"> </div>
+	<button type="button" class="btn btn-outline-danger col-xxl-1 col-2 fas fa-angle-double-left"></button>
+	<div class="col-xxl-1 col-1"> </div>
+	<button type="button" class="btn btn-success col-xxl-2 col-2">Start</button>
+	<div class="col-xxl-1 col-1"> </div>
+	<button type="button" class="btn btn-outline-danger col-xxl-1 col-2 fas fa-angle-double-right"></button>
+	<div class="col-xxl-3 col-3"></div>
+	<div></div>
+	</div>
+	
+	<div class="row">
+	<div class="col-xxl-5 col-5"> </div>
+	<button type="button" class="btn btn-outline-danger col-xxl-2 col-2 fas fa-angle-double-down"></button>
+	<div class="col-xxl-5 col-5"> </div>
+	</div>
 	</div>
 	
 	<input type="hidden" th:if="${welcome != null}" th:value="${welcome}" id="welcome-msg"> 

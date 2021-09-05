@@ -4,7 +4,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,18 +27,22 @@ public class SignInOperations {
 	public String goLoginPage() {
 		return "login";
 	}
+	
+	@RequestMapping("ranklist")
+	public String goRankListPage() {
+		return "ranklist";
+	}
 
 	@PostMapping("/player-sign-in")
-	public String signInPlayer(HttpServletRequest request, Model model) throws ParseException {
+	public String signInPlayer(HttpServletRequest request, HttpServletResponse response, Model model) throws ParseException {
 
 		String playerName = request.getParameter("playerName");
 		String birthDate = request.getParameter("birthDate");
 		
-
 		if (playerService.validateInputData(playerName, birthDate)) {
 			
 			Date dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(birthDate);
-			Player player = playerService.getPlayerByName(playerName);
+			Player player = playerService.getPlayerByNameAndBirthDate(playerName, birthDate);
 
 			if (player == null) {
 				player = new Player();
@@ -43,11 +50,12 @@ public class SignInOperations {
 				player.setBirthDate(dateOfBirth);
 				playerService.save(player);
 			}
-			else if(playerName.equals(player.getName()) && dateOfBirth.compareTo(player.getBirthDate()) != 0 ) {
-				model.addAttribute("invalid", true);
-				return "login";
-			}
 			
+			Long playerId = playerService.getPlayerIdByNameAndBirthDate(playerName, dateOfBirth);
+			
+			Cookie cookie = new Cookie("playerId", String.valueOf(playerId));
+			
+			response.addCookie(cookie);
 
 			model.addAttribute("welcome", "Hi " + player.getName() + ", you're welcome to W E B T R I S Game!\n"
 					+ "Your highest score is: " + player.getScore());

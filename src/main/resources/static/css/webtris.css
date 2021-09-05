@@ -23,6 +23,11 @@ form#centered-form{
 	text-align: right;
 }
 
+.resultlist{
+	width: 80%;
+	margin: 0 auto;
+}
+
 .gameboard{
 	width: 20%;
 	margin: 0 auto;
@@ -32,6 +37,16 @@ td{
 	height: 25px;
 }
 
+th{
+	text-align: center;
+}
+
 #invalid-msg{
 	display: none;
+}
+
+.btn-success {
+	margin-top: 5px;
+	margin-bottom: 5px;
+
 }

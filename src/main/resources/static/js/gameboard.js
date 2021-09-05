@@ -31,3 +31,20 @@ for(let i = 0; i < tds.length; i++){
 }
 
 }
+
+document.querySelector(".btn-success").addEventListener("click", function(){
+	
+	let text = this.innerText;
+	
+	if("Start" === text){
+		this.innerText = "Stop"
+		this.classList.remove("btn-success");
+		this.classList.add("btn-danger");
+	}
+	else if("Stop" === text){
+		this.innerText = "Start"
+		this.classList.remove("btn-danger");
+		this.classList.add("btn-success");
+	}
+	
+});

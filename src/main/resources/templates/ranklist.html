@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/webtris.css}">
+    <title>W E B T R I S RankList</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light nav">
+		<div class="container-fluid row">
+
+			<div class="col-7 col-xxl-1">
+				<a class="nav-link git" href="https://github.com/davidgiczi/Webtris"
+					tabindex="-1" aria-disabled="true"
+					title="Webtris GitHub repository">&nbsp;&nbsp;&nbsp;GitHub</a>
+
+			</div>
+			
+			<div class="col-7 col-xxl-2">
+				<a class="nav-link git" href="/webtris"
+					tabindex="-1" aria-disabled="true"
+					title="WEBTRIS startpage">&nbsp;&nbsp;&nbsp;Home</a>
+
+			</div>
+
+
+			<div class="col-7 col-xxl-9 right">
+				<a class="nav-link git" href="/webtris"
+					tabindex="-1" aria-disabled="true" title="My GitHub repository"><span>&copy;&nbsp;2021&nbsp;Dávid
+						Giczi</span></a>
+
+			</div>
+		</div>
+	</nav>
+	<br>
+	<div class="table-responsive table-striped">
+	
+		<table class="table table-bordered resultlist">
+			<thead>
+			<tr>
+			<th>Place</th>
+			<th>Player's name</th>
+			<th>Score</th>
+			<th>Date of Result</th>
+			</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+		</table>
+	</div>
+    
+    <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+</body>
+</html>

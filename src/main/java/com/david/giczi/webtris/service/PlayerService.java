@@ -26,11 +26,8 @@ public class PlayerService {
 		return player;
 	}
 	
-	public Player getPlayerByName(String name)  {
-		
-		Player player = playerRepo.getPlayerByName(name);
-		
-		return player;
+	public Long getPlayerIdByNameAndBirthDate(String name, Date birthDate) {
+		return playerRepo.getPlayerIdByNameAndBirthDate(name, birthDate);
 	}
 	
 	public boolean validateInputData(String name, String birthdate) {
