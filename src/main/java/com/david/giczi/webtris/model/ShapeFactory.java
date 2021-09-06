@@ -9,19 +9,28 @@ import com.david.giczi.webtris.model.shapes.PillarShape;
 import com.david.giczi.webtris.model.shapes.LeftStairShape;
 import com.david.giczi.webtris.model.shapes.RightStairShape;
 import com.david.giczi.webtris.model.shapes.SquareShape;
+
 /**
  *
  * @author GicziD
  */
+
 public class ShapeFactory {
     
-    private static final String[] SHAPE_COLOR = { };
+    private static final String[] SHAPE_COLOR = { "#d11141",
+                                                  "#00b159",
+                                                  "#00aedb",
+                                                  "#f37735",
+                                                  "#ffc425"
+                                                  
+    };
     
-    public static AbstractShape getShape(){
+   
+    public AbstractShape getShape(){
         
         AbstractShape shape;
         int percentValue = (int) (Math.random() * 105);
-        ShapePosition starterPosition = new ShapePosition(10, 6);
+        ShapePosition starterPosition = new ShapePosition(2, 0);
 
             if(0 <= percentValue && percentValue < 15) {
                 

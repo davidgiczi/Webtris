@@ -15,186 +15,79 @@ import java.util.List;
  *
  * @author GicziD
  */
-public class GameLogic {
+
+public class TetrisLogic {
 
     private List<Boolean> logicBoard;
     private List<AbstractShape> shapeStore;
-    private final boolean[] actualLevel;
-    private int level = 0;
     private int score = 0;
 
-    public GameLogic() {
-        actualLevel = new boolean[10];
-        setupActualLevel(0);
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
+ 
     public List<Boolean> getLogicBoard() {
         return logicBoard;
     }
 
+ 
+    public void setLogicBoard(List<Boolean> logicBoard) {
+        this.logicBoard = logicBoard;
+    }
+    
+ 
+    public int getScore() {
+        return score;
+    }
+
+  
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+   
     public List<AbstractShape> getShapeStore() {
         return shapeStore;
     }
 
-    public void increaseLevelValueByScoreValue() {
-
-        if (score >= 500 && actualLevel[0]) {
-            increaseLevelValue();
-            setupActualLevel(1);
-        } else if (score >= 1000 && actualLevel[1]) {
-            increaseLevelValue();
-            setupActualLevel(2);
-        } else if (score >= 5000 && actualLevel[2]) {
-            increaseLevelValue();
-            setupActualLevel(3);
-        } else if (score >= 10000 && actualLevel[3]) {
-            increaseLevelValue();
-            setupActualLevel(4);
-        } else if (score >= 15000 && actualLevel[4]) {
-            increaseLevelValue();
-            setupActualLevel(5);
-        } else if (score >= 20000 && actualLevel[5]) {
-            increaseLevelValue();
-            setupActualLevel(6);
-        } else if (score >= 25000 && actualLevel[6]) {
-            increaseLevelValue();
-            setupActualLevel(7);
-        } else if (score >= 30000 && actualLevel[7]) {
-            increaseLevelValue();
-            setupActualLevel(8);
-        } else if (score >= 35000 && actualLevel[8]) {
-            increaseLevelValue();
-            setupActualLevel(9);
-        }
-
+    
+    public void setShapeStore(List<AbstractShape> shapeStore) {
+        this.shapeStore = shapeStore;
     }
+   
+    
+    public void clearLogicBoard() {
 
-    private void setupActualLevel(int index) {
-        for (int i = 0; i < actualLevel.length; i++) {
-            actualLevel[i] = i == index;
-        }
-    }
-
-    public void initGame() {
-
-        this.level = 0;
-        this.score = 0;
-
-        setupActualLevel(0);
-
-        if (logicBoard == null) {
-
-            logicBoard = new ArrayList<>();
-            initLogicBoard();
-
-        } else {
-
-            clearLogicBoard();
-
-        }
-
-        if (shapeStore == null) {
-            shapeStore = new ArrayList<>();
-        } else {
-            shapeStore.clear();
-        }
-    }
-
-    private void initLogicBoard() {
-//        for (int i = 0;
-//                i < Displayer.WIDTH_OF_BOARD * Displayer.LENGTH_OF_BOARD; i++) {
-//            logicBoard.add(Boolean.FALSE);
-//        }
-    }
-
-    private void clearLogicBoard() {
-
-//        for (int i = 0;
-//                i < Displayer.WIDTH_OF_BOARD * Displayer.LENGTH_OF_BOARD; i++) {
-//            if (logicBoard.get(i)) {
-//                logicBoard.set(i, Boolean.FALSE);
-//            }
-//        }
-    }
-
-    public void addShapeToLogicBoard(AbstractShape shape) {
-
-        for (ShapePosition shapePosition : shape.shapeComponent) {
-            if (shapePosition.getLogicBoardIndex() == -1) {
-                return;
+        for (int i = 0;
+                i < ShapePosition.WIDTH_OF_BOARD * ShapePosition.LENGTH_OF_BOARD; i++) {
+            if (logicBoard.get(i)) {
+                logicBoard.set(i, Boolean.FALSE);
             }
         }
+    }
+    
+ 
+    public void initLogicBoard() {
+        
+        for (int i = 0;
+                i < ShapePosition.WIDTH_OF_BOARD * ShapePosition.LENGTH_OF_BOARD; i++) {
+                logicBoard.add(Boolean.FALSE);
+        }
+    }
 
+    
+    public void addShapeToLogicBoard(AbstractShape shape) {
+        
         shape.shapeComponent
                 .forEach(component -> logicBoard
                 .set(component.getLogicBoardIndex(), Boolean.TRUE));
 
     }
 
+    
     public void addShapeToStore(AbstractShape shape) {
 
         shapeStore.add(shape);
     }
 
-    public void increaseLevelValue() {
-        if (level < 9) {
-            level++;
-            setLevel(level);
-        }
-    }
-
-    public void decreaseLevelValue() {
-        if (0 < level) {
-            level--;
-            setLevel(level);
-        }
-
-    }
-
-    public int getDelay() {
-
-        switch (level) {
-
-            case 1:
-                return 800;
-            case 2:
-                return 600;
-            case 3:
-                return 400;
-            case 4:
-                return 200;
-            case 5:
-                return 150;
-            case 6:
-                return 100;
-            case 7:
-                return 80;
-            case 8:
-                return 60;
-            case 9:
-                return 50;
-            default:
-                return 1000;
-        }
-
-    }
-
+    
     public boolean canShapeBeMovedToLeft(AbstractShape shape) {
 
         if (shape instanceof PillarShape) {
@@ -229,13 +122,13 @@ public class GameLogic {
 
         if (shape.shapeRotationPosition.get(0)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
             shape.shapeComponent.forEach(component -> leftPosition
-                    .add(new ShapePosition(component.getDisplayer_x() - 2, component.getDisplayer_y())));
+                    .add(new ShapePosition(component.getDisplayer_x() - 1, component.getDisplayer_y())));
 
         }
 
@@ -257,9 +150,9 @@ public class GameLogic {
 
         List<ShapePosition> leftPosition = new ArrayList<>();
 
-        leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+        leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                 shape.shapeComponent.get(0).getDisplayer_y()));
-        leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 2,
+        leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 1,
                 shape.shapeComponent.get(2).getDisplayer_y()));
 
         for (ShapePosition shapePosition : leftPosition) {
@@ -282,34 +175,34 @@ public class GameLogic {
 
         if (shape.shapeRotationPosition.get(0)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(2)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(3)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         }
@@ -333,34 +226,34 @@ public class GameLogic {
 
         if (shape.shapeRotationPosition.get(0)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(2)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(3)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
 
         }
@@ -384,34 +277,34 @@ public class GameLogic {
 
         if (shape.shapeRotationPosition.get(0)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(2)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(3)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         }
@@ -435,18 +328,18 @@ public class GameLogic {
 
         if (shape.shapeRotationPosition.get(0)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         }
@@ -470,18 +363,18 @@ public class GameLogic {
 
         if (shape.shapeRotationPosition.get(0)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 2,
+            leftPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() - 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         }
@@ -500,6 +393,7 @@ public class GameLogic {
         return true;
     }
 
+    
     public boolean canShapeBeMovedToRight(AbstractShape shape) {
 
         if (shape instanceof PillarShape) {
@@ -534,13 +428,13 @@ public class GameLogic {
 
         if (shape.shapeRotationPosition.get(0)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
             shape.shapeComponent.forEach(component -> rightPosition
-                    .add(new ShapePosition(component.getDisplayer_x() + 2, component.getDisplayer_y())));
+                    .add(new ShapePosition(component.getDisplayer_x() + 1, component.getDisplayer_y())));
 
         }
 
@@ -562,9 +456,9 @@ public class GameLogic {
 
         List<ShapePosition> rightPosition = new ArrayList<>();
 
-        rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 2,
+        rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 1,
                 shape.shapeComponent.get(1).getDisplayer_y()));
-        rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+        rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                 shape.shapeComponent.get(3).getDisplayer_y()));
 
         for (ShapePosition shapePosition : rightPosition) {
@@ -587,34 +481,34 @@ public class GameLogic {
 
         if (shape.shapeRotationPosition.get(0)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(2)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(3)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         }
@@ -638,34 +532,34 @@ public class GameLogic {
 
         if (shape.shapeRotationPosition.get(0)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(2)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(3)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         }
@@ -689,34 +583,34 @@ public class GameLogic {
 
         if (shape.shapeRotationPosition.get(0)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(2)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(3)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         }
@@ -740,18 +634,18 @@ public class GameLogic {
 
         if (shape.shapeRotationPosition.get(0)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         }
@@ -775,18 +669,18 @@ public class GameLogic {
 
         if (shape.shapeRotationPosition.get(0)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
-            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rightPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
 
         }
@@ -805,6 +699,7 @@ public class GameLogic {
         return true;
     }
 
+    
     public boolean canShapeBeMovedToDown(AbstractShape shape) {
 
         if (shape instanceof PillarShape) {
@@ -1160,6 +1055,7 @@ public class GameLogic {
 
     }
 
+    
     public boolean canShapeBeRotated(AbstractShape shape) {
 
         if (shape instanceof PillarShape) {
@@ -1203,7 +1099,7 @@ public class GameLogic {
         } else if (shape.shapeRotationPosition.get(1)) {
 
             for (int i = 1; i < 4; i++) {
-                rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2 * i,
+                rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + i,
                         shape.shapeComponent.get(0).getDisplayer_y()));
             }
 
@@ -1236,7 +1132,7 @@ public class GameLogic {
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(2)) {
@@ -1246,9 +1142,9 @@ public class GameLogic {
 
         } else if (shape.shapeRotationPosition.get(3)) {
 
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
 
         }
@@ -1279,11 +1175,11 @@ public class GameLogic {
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() - 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x() + 1,
                     shape.shapeComponent.get(2).getDisplayer_y()));
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(2)) {
@@ -1297,11 +1193,11 @@ public class GameLogic {
 
         } else if (shape.shapeRotationPosition.get(3)) {
 
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
 
         }
@@ -1327,32 +1223,32 @@ public class GameLogic {
 
             rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x(),
                     shape.shapeComponent.get(1).getDisplayer_y() + 1));
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y() + 2));
             rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x(),
                     shape.shapeComponent.get(1).getDisplayer_y() + 2));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() + 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
 
         } else if (shape.shapeRotationPosition.get(2)) {
 
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 4,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
                     shape.shapeComponent.get(0).getDisplayer_y()));
             rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(2).getDisplayer_x(),
                     shape.shapeComponent.get(2).getDisplayer_y() + 1));
 
         } else if (shape.shapeRotationPosition.get(3)) {
 
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() - 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
             rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x(),
                     shape.shapeComponent.get(1).getDisplayer_y() + 1));
@@ -1385,7 +1281,7 @@ public class GameLogic {
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y() - 1));
             rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x(),
                     shape.shapeComponent.get(1).getDisplayer_y() - 1));
@@ -1411,16 +1307,16 @@ public class GameLogic {
 
         if (shape.shapeRotationPosition.get(0)) {
 
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y()));
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(3).getDisplayer_x() + 1,
                     shape.shapeComponent.get(3).getDisplayer_y() + 1));
 
         } else if (shape.shapeRotationPosition.get(1)) {
 
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(1).getDisplayer_x() - 1,
                     shape.shapeComponent.get(1).getDisplayer_y()));
-            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 2,
+            rotatedPosition.add(new ShapePosition(shape.shapeComponent.get(0).getDisplayer_x() + 1,
                     shape.shapeComponent.get(0).getDisplayer_y()));
 
         }
@@ -1438,17 +1334,14 @@ public class GameLogic {
         return true;
     }
 
-    public void moveLogicShape(AbstractShape shape) {
-
-        shape.shapeComponent.forEach(component -> logicBoard.set(component.getLogicBoardIndex(), Boolean.TRUE));
-
-    }
-
-    public void clearLogicBoard(List<ShapePosition> deletedShapePosition) {
+   
+    
+    public void addDeletedPositionToLogicBoard(List<ShapePosition> deletedShapePosition) {
 
         deletedShapePosition.forEach(position -> logicBoard.set(position.getLogicBoardIndex(), Boolean.FALSE));
     }
 
+    
     public void calcScore(AbstractShape shape) {
 
         if (shape instanceof PillarShape) {
@@ -1549,39 +1442,41 @@ public class GameLogic {
         });
     }
 
+    
     public List<Integer> getCompleteTrueRowsIndex() {
 
         List<Integer> rowsIndex = new ArrayList<>();
 
-//        for (int i = 0; i < Displayer.LENGTH_OF_BOARD; i++) {
-//
-//            int trueCounter = 0;
-//
-//            for (int j = 0; j < Displayer.WIDTH_OF_BOARD; j++) {
-//
-//                if (logicBoard.get(i * Displayer.WIDTH_OF_BOARD + j)) {
-//                    trueCounter++;
-//                }
-//
-//            }
-//
-//            if (trueCounter == Displayer.WIDTH_OF_BOARD) {
-//                rowsIndex.add(i);
-//            }
-//
-//        }
+        for (int i = 0; i < ShapePosition.LENGTH_OF_BOARD; i++) {
+
+            int trueCounter = 0;
+
+            for (int j = 0; j < ShapePosition.WIDTH_OF_BOARD; j++) {
+
+                if (logicBoard.get(i * ShapePosition.WIDTH_OF_BOARD + j)) {
+                    trueCounter++;
+                }
+
+            }
+
+            if (trueCounter == ShapePosition.WIDTH_OF_BOARD) {
+                rowsIndex.add(i);
+            }
+
+        }
 
         return rowsIndex;
     }
 
+    
     public void deleteCompleteTrueRowsFromShapeComponent(List<Integer> completeTrueRowsIndex) {
 
         List<ShapePosition> deletedPosition = new ArrayList<>();
 
         completeTrueRowsIndex.forEach((x) -> {
-//            for (int y = 0; y < Displayer.WIDTH_OF_BOARD; y++) {
-//                deletedPosition.add(new ShapePosition(x * Displayer.WIDTH_OF_BOARD + y));
-//            }
+            for (int y = 0; y < ShapePosition.WIDTH_OF_BOARD; y++) {
+                deletedPosition.add(new ShapePosition(x * ShapePosition.WIDTH_OF_BOARD + y));
+            }
         });
 
         deletedPosition.forEach((component) -> {
@@ -1596,15 +1491,17 @@ public class GameLogic {
 
     }
 
+    
     public void increaseRowNumberForShapeComponentInShapeStore(List<Integer> completeTrueRowsIndex) {
 
         completeTrueRowsIndex.forEach((rowIndex) -> {
             shapeStore.forEach((shape) -> {
                 for (int i = 0; i < shape.shapeComponent.size(); i++) {
 
-                    if (shape.shapeComponent.get(i).getDisplayer_y() - ShapePosition.VR_SHIFT < rowIndex) {
-                        shape.shapeComponent.set(i, new ShapePosition(shape.shapeComponent.get(i).getDisplayer_x(),
-                                shape.shapeComponent.get(i).getDisplayer_y() + 1));
+                    if (shape.shapeComponent.get(i).getDisplayer_y() < rowIndex) {
+                        shape.shapeComponent.set(i, new ShapePosition(
+                                shape.shapeComponent.get(i).getLogicBoardIndex()
+                                        + ShapePosition.WIDTH_OF_BOARD));
                     }
 
                 }
@@ -1613,6 +1510,7 @@ public class GameLogic {
 
     }
 
+    
     public void refreshLogicBoard() {
 
         clearLogicBoard();
@@ -1622,38 +1520,61 @@ public class GameLogic {
         });
     }
 
+    
     public boolean isTheEndOfTheGame() {
 
-//        for (int i = 0; i < Displayer.WIDTH_OF_BOARD; i++) {
-//            if (logicBoard.get(i)) {
-//                return true;
-//            }
-//        }
+        for (int i = 0; i < ShapePosition.WIDTH_OF_BOARD; i++) {
+            if (logicBoard.get(i)) {
+                return true;
+            }
+        }
 
         return false;
     }
 
-    public void displayLogicBoard() {
-
-        String ANSI_RESET = "\u001B[0m";
+    
+    public String createDisplayableLogicBoard() {
+        
+        StringBuilder build = new StringBuilder("\n");
+        
         String ANSI_RED = "\u001B[31m";
+        String ANSI_RESET = "\u001B[0m";
+        
 
-//        for (int i = 0; i < Displayer.LENGTH_OF_BOARD; i++) {
-//
-//            for (int j = 0; j < Displayer.WIDTH_OF_BOARD; j++) {
-//
-//                boolean value = logicBoard.get(i * Displayer.WIDTH_OF_BOARD + j);
-//
-//                if (value) {
-//                    System.out.print(ANSI_RED + String.valueOf(value).toUpperCase() + " " + ANSI_RESET);
-//                } else {
-//
-//                    System.out.print(value + " ");
-//                }
-//
-//            }
-//            System.out.println();
-//        }
-        System.out.println(ANSI_RED + "end of the board" + ANSI_RESET);
+        for (int i = 0; i < ShapePosition.LENGTH_OF_BOARD; i++) {
+            
+            for(int j = 0; j < ShapePosition.WIDTH_OF_BOARD; j++){
+            
+             boolean value = logicBoard.get(i * ShapePosition.WIDTH_OF_BOARD + j);
+                
+                if (value) {
+                    
+                 build.append(ANSI_RED)
+                      .append("!")
+                      .append(String.valueOf(value).toUpperCase())
+                      .append(ANSI_RESET)
+                      .append(" ");
+                     
+                      
+                } else {
+
+                   build.append(value)
+                        .append(" ");
+                                              
+                }
+                
+            }   
+                    build.append("\n");
+        }
+        
+        build.append("\n")
+             .append(ANSI_RED)
+             .append("end of the board")
+             .append(ANSI_RESET);
+        
+             
+        return build.toString();
     }
+
+    
 }

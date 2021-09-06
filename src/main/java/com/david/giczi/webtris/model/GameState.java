@@ -2,11 +2,15 @@ package com.david.giczi.webtris.model;
 
 import java.util.List;
 
+import com.david.giczi.webtris.model.shapes.AbstractShape;
+
 public class GameState {
 
 	
-	private List<Integer> actualShape;
-	private List<Integer> deletedComponents;
+	private List<AbstractShape> actualShape;
+	private List<AbstractShape> deletedComponents;
+	private List<AbstractShape> shapeStore;
+	private List<Boolean> logicBoard;
 	private String shapeColor;
 	private int score;
 	
@@ -14,24 +18,51 @@ public class GameState {
 	public GameState() {
 	}
 
-
-	public List<Integer> getActualShape() {
+	public List<AbstractShape> getActualShape() {
 		return actualShape;
 	}
 
 
-	public void setActualShape(List<Integer> actualShape) {
+
+
+	public void setActualShape(List<AbstractShape> actualShape) {
 		this.actualShape = actualShape;
 	}
 
 
-	public List<Integer> getDeletedComponents() {
+
+
+	public List<AbstractShape> getDeletedComponents() {
 		return deletedComponents;
 	}
 
 
-	public void setDeletedComponents(List<Integer> deletedComponents) {
+
+
+	public void setDeletedComponents(List<AbstractShape> deletedComponents) {
 		this.deletedComponents = deletedComponents;
+	}
+
+
+
+
+	public List<Boolean> getLogicBoard() {
+		return logicBoard;
+	}
+
+
+	public void setLogicBoard(List<Boolean> logicBoard) {
+		this.logicBoard = logicBoard;
+	}
+	
+	
+	public List<AbstractShape> getShapeStore() {
+		return shapeStore;
+	}
+
+
+	public void setShapeStore(List<AbstractShape> shapeStore) {
+		this.shapeStore = shapeStore;
 	}
 
 

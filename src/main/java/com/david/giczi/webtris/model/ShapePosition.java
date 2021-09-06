@@ -14,8 +14,8 @@ public class ShapePosition {
     private final int displayer_x;
     private final int displayer_y;
     private final int  logicBoardIndex;
-    public static final int HR_SHIFT = 24;
-    public static final int VR_SHIFT = 2;
+    public static final int LENGTH_OF_BOARD = 20;
+    public static final int WIDTH_OF_BOARD = 10;
 
     public int getDisplayer_x() {
         return displayer_x;
@@ -41,15 +41,12 @@ public class ShapePosition {
        
        int index = -1;
        
-       int logic_x = x - HR_SHIFT;
-       int logic_y = y - VR_SHIFT;
-       
-//       if(HR_SHIFT <= x && VR_SHIFT <= y && 
-//               x < HR_SHIFT + Displayer.LENGTH_OF_BOARD && 
-//               y < VR_SHIFT + Displayer.LENGTH_OF_BOARD){
-//           
-//       index = logic_y * Displayer.WIDTH_OF_BOARD + logic_x/2;     
-//       }
+       if(0 <= x && 0 <= y && 
+               x < WIDTH_OF_BOARD && 
+               y < LENGTH_OF_BOARD){
+           
+       index = y * WIDTH_OF_BOARD + x;     
+       }
       
        return index;
    }
@@ -68,17 +65,17 @@ public class ShapePosition {
        
        List<Integer> coords = new ArrayList<>();
        
-//       int disp_x = index % Displayer.WIDTH_OF_BOARD * 2 + HR_SHIFT;
-//       int disp_y = index / Displayer.WIDTH_OF_BOARD + VR_SHIFT;
-//       
-//       if(0 <= index && index < 200){   
-//           coords.add(disp_x);
-//           coords.add(disp_y);
-//       }
-//       else{
-//           coords.add(-1);
-//           coords.add(-1);
-//       }
+       int disp_x = index % WIDTH_OF_BOARD;
+       int disp_y = index / WIDTH_OF_BOARD;
+       
+       if(0 <= index && index < WIDTH_OF_BOARD * LENGTH_OF_BOARD){   
+           coords.add(disp_x);
+           coords.add(disp_y);
+       }
+       else{
+           coords.add(-1);
+           coords.add(-1);
+       }
              
        return coords;
    }
