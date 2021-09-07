@@ -7,8 +7,8 @@ import com.david.giczi.webtris.model.shapes.AbstractShape;
 public class GameState {
 
 	
-	private List<AbstractShape> actualShape;
-	private List<AbstractShape> deletedComponents;
+	private AbstractShape actualShape;
+	private AbstractShape nextShape;
 	private List<AbstractShape> shapeStore;
 	private List<Boolean> logicBoard;
 	private String shapeColor;
@@ -18,30 +18,26 @@ public class GameState {
 	public GameState() {
 	}
 
-	public List<AbstractShape> getActualShape() {
+
+	public AbstractShape getActualShape() {
 		return actualShape;
 	}
 
 
-
-
-	public void setActualShape(List<AbstractShape> actualShape) {
+	public void setActualShape(AbstractShape actualShape) {
 		this.actualShape = actualShape;
 	}
 
 
-
-
-	public List<AbstractShape> getDeletedComponents() {
-		return deletedComponents;
+	public AbstractShape getNextShape() {
+		return nextShape;
 	}
 
 
-
-
-	public void setDeletedComponents(List<AbstractShape> deletedComponents) {
-		this.deletedComponents = deletedComponents;
+	public void setNextShape(AbstractShape nextShape) {
+		this.nextShape = nextShape;
 	}
+
 
 
 

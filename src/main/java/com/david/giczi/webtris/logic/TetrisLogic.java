@@ -1,6 +1,7 @@
-package com.david.giczi.webtris.model;
+package com.david.giczi.webtris.logic;
 
 import com.david.giczi.webtris.model.shapes.RightGunShape;
+import com.david.giczi.webtris.model.ShapePosition;
 import com.david.giczi.webtris.model.shapes.AbstractShape;
 import com.david.giczi.webtris.model.shapes.TShape;
 import com.david.giczi.webtris.model.shapes.LeftGunShape;
