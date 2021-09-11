@@ -18,12 +18,12 @@ public class RightGunShape extends AbstractShape {
     @Override
     public final void createShape(ShapePosition starterPosition) {
         this.shapeRotationPosition = super.initShapeRotationPosition();
-        shapeComponent.add(new ShapePosition(starterPosition.getDisplayer_x() - 2,
+        shapeComponent.add(new ShapePosition(starterPosition.getDisplayer_x() - 1,
                 starterPosition.getDisplayer_y()));
         shapeComponent.add(starterPosition);
-        shapeComponent.add(new ShapePosition(starterPosition.getDisplayer_x() + 2,
+        shapeComponent.add(new ShapePosition(starterPosition.getDisplayer_x() + 1,
                 starterPosition.getDisplayer_y()));
-        shapeComponent.add(new ShapePosition(starterPosition.getDisplayer_x() + 2,
+        shapeComponent.add(new ShapePosition(starterPosition.getDisplayer_x() + 1,
                 starterPosition.getDisplayer_y() + 1));
     }
 
@@ -39,7 +39,7 @@ public class RightGunShape extends AbstractShape {
             shapeComponent.add(temp.get(1));
             shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x(),
                     temp.get(1).getDisplayer_y() + 1));
-            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() - 2,
+            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() - 1,
                     temp.get(1).getDisplayer_y() + 2));
             shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x(),
                     temp.get(1).getDisplayer_y() + 2));
@@ -52,12 +52,12 @@ public class RightGunShape extends AbstractShape {
             shapeRotationPosition.set(1, Boolean.TRUE);
         } else if (shapeRotationPosition.get(1)) {
 
-            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 2,
+            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 1,
                     temp.get(0).getDisplayer_y()));
-            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() - 2,
+            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() - 1,
                     temp.get(1).getDisplayer_y()));
             shapeComponent.add(temp.get(1));
-            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() + 2,
+            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() + 1,
                     temp.get(1).getDisplayer_y()));
 
             deletedShapePosition.add(temp.get(0));
@@ -68,9 +68,9 @@ public class RightGunShape extends AbstractShape {
             shapeRotationPosition.set(2, Boolean.TRUE);
         } else if (shapeRotationPosition.get(2)) {
 
-            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 2,
+            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 1,
                     temp.get(0).getDisplayer_y()));
-            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 4,
+            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 2,
                     temp.get(0).getDisplayer_y()));
             shapeComponent.add(temp.get(2));
             shapeComponent.add(new ShapePosition(temp.get(2).getDisplayer_x(),
@@ -84,7 +84,7 @@ public class RightGunShape extends AbstractShape {
             shapeRotationPosition.set(3, Boolean.TRUE);
         } else if (shapeRotationPosition.get(3)) {
 
-            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 2,
+            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 1,
                     temp.get(0).getDisplayer_y()));
             shapeComponent.add(temp.get(0));
             shapeComponent.add(temp.get(1));
@@ -110,7 +110,7 @@ public class RightGunShape extends AbstractShape {
 
         if (shapeRotationPosition.get(0)) {
 
-            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 2,
+            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 1,
                     temp.get(0).getDisplayer_y()));
             shapeComponent.add(temp.get(0));
             shapeComponent.add(temp.get(1));
@@ -121,11 +121,11 @@ public class RightGunShape extends AbstractShape {
             deletedShapePosition.add(temp.get(3));
         } else if (shapeRotationPosition.get(1)) {
 
-            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 2,
+            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 1,
                     temp.get(0).getDisplayer_y()));
-            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() - 2,
+            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() - 1,
                     temp.get(1).getDisplayer_y()));
-            shapeComponent.add(new ShapePosition(temp.get(2).getDisplayer_x() - 2,
+            shapeComponent.add(new ShapePosition(temp.get(2).getDisplayer_x() - 1,
                     temp.get(2).getDisplayer_y()));
             shapeComponent.add(temp.get(2));
 
@@ -134,9 +134,9 @@ public class RightGunShape extends AbstractShape {
             deletedShapePosition.add(temp.get(3));
         } else if (shapeRotationPosition.get(2)) {
 
-            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 2,
+            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 1,
                     temp.get(0).getDisplayer_y()));
-            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() - 2,
+            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() - 1,
                     temp.get(1).getDisplayer_y()));
             shapeComponent.add(temp.get(1));
             shapeComponent.add(temp.get(2));
@@ -146,12 +146,12 @@ public class RightGunShape extends AbstractShape {
 
         } else if (shapeRotationPosition.get(3)) {
 
-            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 2,
+            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 1,
                     temp.get(0).getDisplayer_y()));
             shapeComponent.add(temp.get(0));
-            shapeComponent.add(new ShapePosition(temp.get(2).getDisplayer_x() - 2,
+            shapeComponent.add(new ShapePosition(temp.get(2).getDisplayer_x() - 1,
                     temp.get(2).getDisplayer_y()));
-            shapeComponent.add(new ShapePosition(temp.get(3).getDisplayer_x() - 2,
+            shapeComponent.add(new ShapePosition(temp.get(3).getDisplayer_x() - 1,
                     temp.get(3).getDisplayer_y()));
 
             deletedShapePosition.add(temp.get(1));
@@ -173,9 +173,9 @@ public class RightGunShape extends AbstractShape {
 
             shapeComponent.add(temp.get(1));
             shapeComponent.add(temp.get(2));
-            shapeComponent.add(new ShapePosition(temp.get(2).getDisplayer_x() + 2,
+            shapeComponent.add(new ShapePosition(temp.get(2).getDisplayer_x() + 1,
                     temp.get(2).getDisplayer_y()));
-            shapeComponent.add(new ShapePosition(temp.get(3).getDisplayer_x() + 2,
+            shapeComponent.add(new ShapePosition(temp.get(3).getDisplayer_x() + 1,
                     temp.get(3).getDisplayer_y()));
 
             deletedShapePosition.add(temp.get(0));
@@ -183,12 +183,12 @@ public class RightGunShape extends AbstractShape {
 
         } else if (shapeRotationPosition.get(1)) {
 
-            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 2,
+            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 1,
                     temp.get(0).getDisplayer_y()));
-            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() + 2,
+            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() + 1,
                     temp.get(1).getDisplayer_y()));
             shapeComponent.add(temp.get(3));
-            shapeComponent.add(new ShapePosition(temp.get(3).getDisplayer_x() + 2,
+            shapeComponent.add(new ShapePosition(temp.get(3).getDisplayer_x() + 1,
                     temp.get(3).getDisplayer_y()));
 
             deletedShapePosition.add(temp.get(0));
@@ -197,11 +197,11 @@ public class RightGunShape extends AbstractShape {
 
         } else if (shapeRotationPosition.get(2)) {
 
-            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 2,
+            shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 1,
                     temp.get(0).getDisplayer_y()));
             shapeComponent.add(temp.get(2));
             shapeComponent.add(temp.get(3));
-            shapeComponent.add(new ShapePosition(temp.get(3).getDisplayer_x() + 2,
+            shapeComponent.add(new ShapePosition(temp.get(3).getDisplayer_x() + 1,
                     temp.get(3).getDisplayer_y()));
 
             deletedShapePosition.add(temp.get(0));
@@ -210,11 +210,11 @@ public class RightGunShape extends AbstractShape {
         } else if (shapeRotationPosition.get(3)) {
 
             shapeComponent.add(temp.get(1));
-            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() + 2,
+            shapeComponent.add(new ShapePosition(temp.get(1).getDisplayer_x() + 1,
                     temp.get(1).getDisplayer_y()));
-            shapeComponent.add(new ShapePosition(temp.get(2).getDisplayer_x() + 2,
+            shapeComponent.add(new ShapePosition(temp.get(2).getDisplayer_x() + 1,
                     temp.get(2).getDisplayer_y()));
-            shapeComponent.add(new ShapePosition(temp.get(3).getDisplayer_x() + 2,
+            shapeComponent.add(new ShapePosition(temp.get(3).getDisplayer_x() + 1,
                     temp.get(3).getDisplayer_y()));
 
             deletedShapePosition.add(temp.get(0));
@@ -276,7 +276,7 @@ public class RightGunShape extends AbstractShape {
         } else if (shapeRotationPosition.get(3)) {
 
             shapeComponent.add(temp.get(2));
-            shapeComponent.add(new ShapePosition(temp.get(2).getDisplayer_x() + 2,
+            shapeComponent.add(new ShapePosition(temp.get(2).getDisplayer_x() + 1,
                     temp.get(2).getDisplayer_y()));
             shapeComponent.add(temp.get(3));
             shapeComponent.add(new ShapePosition(temp.get(3).getDisplayer_x(),

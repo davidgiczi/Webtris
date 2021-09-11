@@ -12,11 +12,14 @@ import com.david.giczi.webtris.model.shapes.SquareShape;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 /**
  *
  * @author GicziD
  */
 
+@Component
 public class TetrisLogic {
 
     private List<Boolean> logicBoard;
@@ -67,6 +70,8 @@ public class TetrisLogic {
  
     public void initLogicBoard() {
         
+    	logicBoard = new ArrayList<>();
+ 
         for (int i = 0;
                 i < ShapePosition.WIDTH_OF_BOARD * ShapePosition.LENGTH_OF_BOARD; i++) {
                 logicBoard.add(Boolean.FALSE);
@@ -75,7 +80,7 @@ public class TetrisLogic {
 
     
     public void addShapeToLogicBoard(AbstractShape shape) {
-        
+            	
         shape.shapeComponent
                 .forEach(component -> logicBoard
                 .set(component.getLogicBoardIndex(), Boolean.TRUE));
@@ -84,7 +89,10 @@ public class TetrisLogic {
 
     
     public void addShapeToStore(AbstractShape shape) {
-
+    	
+    	if(shapeStore == null) {
+    		shapeStore = new ArrayList<>();
+    	}
         shapeStore.add(shape);
     }
 

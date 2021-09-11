@@ -26,11 +26,11 @@ public class ShapeFactory {
     };
     
    
-    public AbstractShape getShape(){
+    public static AbstractShape getShape(){
         
         AbstractShape shape;
         int percentValue = (int) (Math.random() * 105);
-        ShapePosition starterPosition = new ShapePosition(2, 0);
+        ShapePosition starterPosition = new ShapePosition((int) (Math.random() * 7 + 2), 0);
 
             if(0 <= percentValue && percentValue < 15) {
                 

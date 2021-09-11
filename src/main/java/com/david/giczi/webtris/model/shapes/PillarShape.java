@@ -18,10 +18,10 @@ public class PillarShape extends AbstractShape {
     @Override
     public final void createShape(ShapePosition starterPosition) {
         this.shapeRotationPosition = super.initShapeRotationPosition();
-        shapeComponent.add(new ShapePosition(starterPosition.getDisplayer_x() - 4, starterPosition.getDisplayer_y()));
         shapeComponent.add(new ShapePosition(starterPosition.getDisplayer_x() - 2, starterPosition.getDisplayer_y()));
+        shapeComponent.add(new ShapePosition(starterPosition.getDisplayer_x() - 1, starterPosition.getDisplayer_y()));
         shapeComponent.add(starterPosition);
-        shapeComponent.add(new ShapePosition(starterPosition.getDisplayer_x() + 2, starterPosition.getDisplayer_y()));
+        shapeComponent.add(new ShapePosition(starterPosition.getDisplayer_x() + 1, starterPosition.getDisplayer_y()));
     }
 
     @Override
@@ -34,7 +34,7 @@ public class PillarShape extends AbstractShape {
         if (shapeRotationPosition.get(0)) {
 
             shapeComponent.add(new ShapePosition(
-                    temp.get(0).getDisplayer_x() - 2, temp.get(0).getDisplayer_y()));
+                    temp.get(0).getDisplayer_x() - 1, temp.get(0).getDisplayer_y()));
             for (int i = 0; i < temp.size(); i++) {
 
                 if (i < temp.size() - 1) {
@@ -48,7 +48,7 @@ public class PillarShape extends AbstractShape {
         } else if (shapeRotationPosition.get(1)) {
 
             temp.forEach(component -> shapeComponent.add(
-                    new ShapePosition(component.getDisplayer_x() - 2,
+                    new ShapePosition(component.getDisplayer_x() - 1,
                             component.getDisplayer_y())));
             deletedShapePosition = temp;
 
@@ -78,13 +78,13 @@ public class PillarShape extends AbstractShape {
 
             }
             shapeComponent.add(new ShapePosition(
-                    temp.get(temp.size() - 1).getDisplayer_x() + 2,
+                    temp.get(temp.size() - 1).getDisplayer_x() + 1,
                     temp.get(temp.size() - 1).getDisplayer_y()));
 
         } else if (shapeRotationPosition.get(1)) {
 
             temp.forEach(component -> shapeComponent.add(
-                    new ShapePosition(component.getDisplayer_x() + 2,
+                    new ShapePosition(component.getDisplayer_x() + 1,
                             component.getDisplayer_y())));
             deletedShapePosition = temp;
 
@@ -163,7 +163,7 @@ public class PillarShape extends AbstractShape {
                 if (i == 0) {
                     shapeComponent.add(temp.get(i));
                 } else {
-                    int x = temp.get(0).getDisplayer_x() + 2 * i;
+                    int x = temp.get(0).getDisplayer_x() + i;
                     shapeComponent.add(new ShapePosition(x, temp.get(0).getDisplayer_y()));
                 }
 

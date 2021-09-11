@@ -1,8 +1,8 @@
 package com.david.giczi.webtris.model.shapes;
 
+import com.david.giczi.webtris.model.ShapePosition;
 import java.util.ArrayList;
 import java.util.List;
-import com.david.giczi.webtris.model.ShapePosition;
 
 /**
  *
@@ -16,19 +16,6 @@ public abstract class AbstractShape {
 
     public AbstractShape() {
         this.shapeComponent = new ArrayList<>();
-    }
-
-    public void addShapeToGameBoard() {
-
-        shapeComponent.clear();
-        createShape(new ShapePosition(randStarterXPositionForGameBoard(), 2));
-
-    }
-
-    
-    private int randStarterXPositionForGameBoard() {
-
-        return 2 * ((int) (Math.random() * 7)) + 28;
     }
 
     public List<Boolean> initShapeRotationPosition() {

@@ -11,7 +11,6 @@ public class GameState {
 	private AbstractShape nextShape;
 	private List<AbstractShape> shapeStore;
 	private List<Boolean> logicBoard;
-	private String shapeColor;
 	private int score;
 	
 	
@@ -39,9 +38,6 @@ public class GameState {
 	}
 
 
-
-
-
 	public List<Boolean> getLogicBoard() {
 		return logicBoard;
 	}
@@ -61,17 +57,6 @@ public class GameState {
 		this.shapeStore = shapeStore;
 	}
 
-
-	public String getShapeColor() {
-		return shapeColor;
-	}
-
-
-	public void setShapeColor(String shapeColor) {
-		this.shapeColor = shapeColor;
-	}
-
-
 	public int getScore() {
 		return score;
 	}
@@ -80,6 +65,6 @@ public class GameState {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
+
 	
 }

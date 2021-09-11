@@ -16,8 +16,10 @@ for(let x = 0; x < 20; x++){
 	for(y = 0; y < 10; y++){
 		
 		let td = document.createElement("td");
+		td.setAttribute("id", x * 10 + y);
 		tr.appendChild(td);
 	}
+	
 	 tableBody.appendChild(tr);
 }
 

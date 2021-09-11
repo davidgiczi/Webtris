@@ -20,13 +20,13 @@ public class SquareShape extends AbstractShape {
         this.shapeRotationPosition = super.initShapeRotationPosition();
         shapeComponent.add(starterPosition);
         shapeComponent.add(new ShapePosition(
-                starterPosition.getDisplayer_x() + 2,
+                starterPosition.getDisplayer_x() + 1,
                 starterPosition.getDisplayer_y()));
         shapeComponent.add(new ShapePosition(
                 starterPosition.getDisplayer_x(),
                 starterPosition.getDisplayer_y() + 1));
         shapeComponent.add(new ShapePosition(
-                starterPosition.getDisplayer_x() + 2,
+                starterPosition.getDisplayer_x() + 1,
                 starterPosition.getDisplayer_y() + 1));
     }
 
@@ -42,10 +42,10 @@ public class SquareShape extends AbstractShape {
         List<ShapePosition> temp = new ArrayList<>(shapeComponent);
         shapeComponent.clear();
 
-        shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 2,
+        shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 1,
                 temp.get(0).getDisplayer_y()));
         shapeComponent.add(temp.get(0));
-        shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 2,
+        shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() - 1,
                 temp.get(0).getDisplayer_y() + 1));
         shapeComponent.add(temp.get(2));
 
@@ -63,10 +63,10 @@ public class SquareShape extends AbstractShape {
         shapeComponent.clear();
 
         shapeComponent.add(temp.get(1));
-        shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 4,
+        shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 2,
                 temp.get(0).getDisplayer_y()));
         shapeComponent.add(temp.get(3));
-        shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 4,
+        shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 2,
                 temp.get(0).getDisplayer_y() + 1));
 
         deletedShapePosition.add(temp.get(0));
@@ -86,7 +86,7 @@ public class SquareShape extends AbstractShape {
         shapeComponent.add(temp.get(3));
         shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x(),
                 temp.get(0).getDisplayer_y() + 2));
-        shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 2,
+        shapeComponent.add(new ShapePosition(temp.get(0).getDisplayer_x() + 1,
                 temp.get(0).getDisplayer_y() + 2));
 
         deletedShapePosition.add(temp.get(0));
