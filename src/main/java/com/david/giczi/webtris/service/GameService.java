@@ -33,7 +33,11 @@ public class GameService {
 		gameState.setShapeStore(shapeStore);
 		gameState.setScore(0);
 		request.getSession().setAttribute(playerId, gameState);
-		return createDisplayerData(gameState, null, false);
+		DisplayerData displayerData = new DisplayerData();
+		createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
+		createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
+		displayerData.setScore(0);
+		return displayerData;
 	}
 
 	private List<Boolean> initLogicBoard(AbstractShape actualShape) {
@@ -47,31 +51,36 @@ public class GameService {
 		return logic.getShapeStore();
 	}
 
-	private DisplayerData createDisplayerData(GameState gameState, List<ShapePosition> delPositions,
-			boolean isFullRow) {
-
+	private void createActualShapeOfDisplayerDataFromActualShapeOfGameState(GameState gameState, DisplayerData displayerData) {
+		
 		List<Integer> actualShapePositions = gameState.getActualShape().shapeComponent.stream()
 				.map(c -> c.getLogicBoardIndex()).collect(Collectors.toList());
 		ShapeData actualShape = new ShapeData();
 		actualShape.setShapePositions(actualShapePositions);
 		actualShape.setShapeColor(gameState.getActualShape().shapeColor);
-		ShapeData nextShape = new ShapeData();
+		displayerData.setActualShape(actualShape);
+	}
+	
+	private void createNextShapeOfDisplayerDataFromNextShapeOfGameState(GameState gameState, DisplayerData displayerData) {
+		
 		List<Integer> nextShapePositions = gameState.getNextShape().shapeComponent.stream()
 				.map(c -> c.getLogicBoardIndex()).collect(Collectors.toList());
+		ShapeData nextShape = new ShapeData();
 		nextShape.setShapePositions(nextShapePositions);
 		nextShape.setShapeColor(gameState.getNextShape().shapeColor);
-		List<Integer> deletedPositions;
-		if (delPositions != null) {
-			deletedPositions = delPositions.stream().map(p -> p.getLogicBoardIndex()).collect(Collectors.toList());
-		} else {
-			deletedPositions = new ArrayList<>();
-		}
-		DisplayerData displayerData = new DisplayerData();
-		displayerData.setActualShape(actualShape);
 		displayerData.setNextShape(nextShape);
-		displayerData.setDeletedPositions(deletedPositions);
-		displayerData.setScore(gameState.getScore());
-		if (isFullRow) {
+	}
+	
+	private void createDeletedPositionsOfDisplayerDataFromDeletedPositionsOfGameState
+	(List<ShapePosition> deletedPositions, DisplayerData displayerData) {
+		
+		List<Integer> deletedPositionsOfDisplayerData = deletedPositions
+				.stream().map(p -> p.getLogicBoardIndex()).collect(Collectors.toList());
+		displayerData.setDeletedPositions(deletedPositionsOfDisplayerData);
+	}
+	
+	private void createDisplayerDataInCaseOfFullRow(GameState gameState, DisplayerData displayerData) {
+		
 			List<ShapeData> shapeStore = new ArrayList<>();
 			gameState.getShapeStore().forEach(s -> {
 
@@ -82,9 +91,8 @@ public class GameService {
 				shapeData.setShapeColor(s.shapeColor);
 				shapeStore.add(shapeData);
 			});
+			
 			displayerData.setShapeStore(shapeStore);
-		}
-		return displayerData;
 	}
 
 }
