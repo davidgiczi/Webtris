@@ -22,8 +22,10 @@ return data;
 getInitData().then(data =>{
 	
 	displayActualShape(data);
+	console.log(data);
+	displayNextShape(data);
 	displayScore(data);
-
+	
 });
 
 
@@ -33,6 +35,15 @@ function displayActualShape(data){
 
 		document.getElementById(data.actualShape.shapePositions[i])
 		.style.backgroundColor = data.actualShape.shapeColor;
+	}
+}
+
+function displayNextShape(data){
+	
+	for(let i = 0; i < data.nextShape.shapePositions.length; i++){
+
+		document.getElementById(data.nextShape.shapePositions[i] + "-next")
+		.style.backgroundColor = data.nextShape.shapeColor;
 	}
 }
 

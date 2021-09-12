@@ -33,4 +33,8 @@ public class PlayerService {
 	public boolean validateInputData(String name, String birthdate) {
 		return name.trim().length() > 3 && !birthdate.isEmpty();
 	}
+	
+	public int getScoreById(String id) {
+		return playerRepo.getScoreById(id);
+	}
 }

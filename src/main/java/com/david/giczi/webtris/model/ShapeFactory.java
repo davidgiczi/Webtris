@@ -17,21 +17,26 @@ import com.david.giczi.webtris.model.shapes.SquareShape;
 
 public class ShapeFactory {
     
-    private static final String[] SHAPE_COLOR = { "#d11141",
-                                                  "#00b159",
-                                                  "#00aedb",
-                                                  "#f37735",
-                                                  "#ffc425"
+    private static final String[] SHAPE_COLOR = { "#DB4437",
+                                                  "#F4B400",
+                                                  "#4285F4",
+                                                  "#0F9D58",
+                                                  
                                                   
     };
     
    
-    public static AbstractShape getShape(){
+    public static AbstractShape getShape(boolean isActualShape){
         
         AbstractShape shape;
         int percentValue = (int) (Math.random() * 105);
-        ShapePosition starterPosition = new ShapePosition((int) (Math.random() * 7 + 2), 0);
-
+        ShapePosition starterPosition;
+        if(isActualShape) {
+        starterPosition = new ShapePosition((int) (Math.random() * 7 + 2), 0);
+        }
+        else {
+        	starterPosition = new ShapePosition(2 , 0);
+        }
             if(0 <= percentValue && percentValue < 15) {
                 
                 shape = new PillarShape(starterPosition,

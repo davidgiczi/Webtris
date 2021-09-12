@@ -26,9 +26,9 @@ for(let x = 0; x < 20; x++){
 
 if(screen.width < 576){
 let tds= document.getElementsByTagName("td");
-
+document.querySelector(".gameboard").style.width = "25%";
 for(let i = 0; i < tds.length; i++){
-	tds[i].style.height = "20px";
+	tds[i].style.height = "18px";
 	
 }
 

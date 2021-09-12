@@ -19,11 +19,13 @@ public class GameService {
 
 	@Autowired
 	private TetrisLogic logic;
+	@Autowired
+	private PlayerService playerService;
 
 	public DisplayerData initGame(HttpServletRequest request, String playerId) {
 
-		AbstractShape actualShape = ShapeFactory.getShape();
-		AbstractShape nextShape = ShapeFactory.getShape();
+		AbstractShape actualShape = ShapeFactory.getShape(true);
+		AbstractShape nextShape = ShapeFactory.getShape(false);
 		List<Boolean> logicBoard = initLogicBoard(actualShape);
 		List<AbstractShape> shapeStore = initShapeStore(actualShape);
 		GameState gameState = new GameState();
@@ -31,12 +33,12 @@ public class GameService {
 		gameState.setNextShape(nextShape);
 		gameState.setLogicBoard(logicBoard);
 		gameState.setShapeStore(shapeStore);
-		gameState.setScore(0);
+		gameState.setScore(playerService.getScoreById(playerId));
 		request.getSession().setAttribute(playerId, gameState);
 		DisplayerData displayerData = new DisplayerData();
 		createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
 		createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
-		displayerData.setScore(0);
+		displayerData.setScore(gameState.getScore());
 		return displayerData;
 	}
 
