@@ -26,5 +26,20 @@ public class WebtrisOperations {
 		return new ResponseEntity<DisplayerData>(data, HttpStatus.OK);
 	}
 	
+	@GetMapping("/left")
+	public ResponseEntity<DisplayerData> goLeft(@CookieValue(value = "playerId") String playerId, HttpServletRequest request){
+		
+		DisplayerData data = gameService.goShapeLeft(request, playerId);
+		
+		return new ResponseEntity<DisplayerData>(data, HttpStatus.OK);
+	}
+	
+	@GetMapping("/right")
+	public ResponseEntity<DisplayerData> goRight(@CookieValue(value = "playerId") String playerId, HttpServletRequest request){
+		
+		DisplayerData data = gameService.goShapeRight(request, playerId);
+		
+		return new ResponseEntity<DisplayerData>(data, HttpStatus.OK);
+	}
 	
 }

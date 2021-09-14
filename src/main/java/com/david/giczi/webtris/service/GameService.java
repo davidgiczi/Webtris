@@ -97,4 +97,58 @@ public class GameService {
 			displayerData.setShapeStore(shapeStore);
 	}
 
+	public DisplayerData goShapeLeft(HttpServletRequest request, String playerId) {
+		
+		GameState gameState = (GameState) request.getSession().getAttribute(playerId);
+		List<ShapePosition> deletedPositions;
+		
+		if(logic.canShapeBeMovedToLeft(gameState.getActualShape())) {
+			
+			deletedPositions = gameState.getActualShape().moveToLeft();
+			logic.setLogicBoard(gameState.getLogicBoard());
+			logic.addDeletedPositionToLogicBoard(deletedPositions);
+			logic.addShapeToLogicBoard(gameState.getActualShape());
+			gameState.setLogicBoard(logic.getLogicBoard());
+			request.getSession().setAttribute(playerId, gameState);
+		}
+		else {
+			deletedPositions = new ArrayList<>();
+		}
+		
+		DisplayerData displayerData = new DisplayerData();
+		
+		createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
+		createDeletedPositionsOfDisplayerDataFromDeletedPositionsOfGameState(deletedPositions, displayerData);
+		
+		return displayerData;
+	}
+	
+public DisplayerData goShapeRight(HttpServletRequest request, String playerId) {
+		
+		GameState gameState = (GameState) request.getSession().getAttribute(playerId);
+		List<ShapePosition> deletedPositions;
+		
+		if(logic.canShapeBeMovedToRight(gameState.getActualShape())) {
+			
+			deletedPositions = gameState.getActualShape().moveToRight();
+			logic.setLogicBoard(gameState.getLogicBoard());
+			logic.addDeletedPositionToLogicBoard(deletedPositions);
+			logic.addShapeToLogicBoard(gameState.getActualShape());
+			gameState.setLogicBoard(logic.getLogicBoard());
+			request.getSession().setAttribute(playerId, gameState);
+		}
+		else {
+			deletedPositions = new ArrayList<>();
+		}
+		
+		DisplayerData displayerData = new DisplayerData();
+		
+		createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
+		createDeletedPositionsOfDisplayerDataFromDeletedPositionsOfGameState(deletedPositions, displayerData);
+		
+		return displayerData;
+	}
+
+	
+	
 }
