@@ -2,6 +2,7 @@
  * 
  */
  
+
  
  let fecthOptions = {
 	
@@ -12,26 +13,51 @@
 
 document.querySelector(".left-btn").addEventListener("click", function(){
 	
+let startBtnText = document.querySelector(".btn-start-stop").innerText;
+
+	if(startBtnText === "Stop") {
+	
 	goLeft().then(data => {
-		
-		clearDeletedPositions(data);
-		displayActualShape(data);
+	
+	clearDeletedPositions(data);
+	displayActualShape(data);
+	
 	}
 );
-	
+}	
 } );
 
 document.querySelector(".right-btn").addEventListener("click", function(){
-	
+
+let startBtnText = document.querySelector(".btn-start-stop").innerText;
+
+	if(startBtnText === "Stop") {	
+
 	goRight().then(data => {
+	
+	clearDeletedPositions(data);
+	displayActualShape(data);
 		
-		clearDeletedPositions(data);
-		displayActualShape(data);
 	}
 );
-
+}
 } );
 
+document.querySelector(".rotate-btn").addEventListener("click", function(){
+	
+let startBtnText = document.querySelector(".btn-start-stop").innerText;
+
+	if(startBtnText === "Stop") {
+	
+	rotate().then(data => {
+	
+	clearDeletedPositions(data);
+	displayActualShape(data);
+	
+	}
+);
+}	
+} );
 
 async function getInitData(){
 
@@ -91,6 +117,14 @@ return data;
 async function goRight(){
 
 const response = await fetch('/webtris/right', fecthOptions);
+const data = await response.json();
+
+return data;
+}
+
+async function rotate(){
+
+const response = await fetch('/webtris/rotate', fecthOptions);
 const data = await response.json();
 
 return data;

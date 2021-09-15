@@ -100,7 +100,7 @@ public class GameService {
 	public DisplayerData goShapeLeft(HttpServletRequest request, String playerId) {
 		
 		GameState gameState = (GameState) request.getSession().getAttribute(playerId);
-		List<ShapePosition> deletedPositions;
+		List<ShapePosition> deletedPositions = new ArrayList<>();
 		
 		if(logic.canShapeBeMovedToLeft(gameState.getActualShape())) {
 			
@@ -110,9 +110,6 @@ public class GameService {
 			logic.addShapeToLogicBoard(gameState.getActualShape());
 			gameState.setLogicBoard(logic.getLogicBoard());
 			request.getSession().setAttribute(playerId, gameState);
-		}
-		else {
-			deletedPositions = new ArrayList<>();
 		}
 		
 		DisplayerData displayerData = new DisplayerData();
@@ -126,7 +123,7 @@ public class GameService {
 public DisplayerData goShapeRight(HttpServletRequest request, String playerId) {
 		
 		GameState gameState = (GameState) request.getSession().getAttribute(playerId);
-		List<ShapePosition> deletedPositions;
+		List<ShapePosition> deletedPositions = new ArrayList<>();
 		
 		if(logic.canShapeBeMovedToRight(gameState.getActualShape())) {
 			
@@ -137,9 +134,7 @@ public DisplayerData goShapeRight(HttpServletRequest request, String playerId) {
 			gameState.setLogicBoard(logic.getLogicBoard());
 			request.getSession().setAttribute(playerId, gameState);
 		}
-		else {
-			deletedPositions = new ArrayList<>();
-		}
+		
 		
 		DisplayerData displayerData = new DisplayerData();
 		
@@ -148,6 +143,29 @@ public DisplayerData goShapeRight(HttpServletRequest request, String playerId) {
 		
 		return displayerData;
 	}
+
+public DisplayerData rotateShape(HttpServletRequest request, String playerId) {
+	
+	GameState gameState = (GameState) request.getSession().getAttribute(playerId);
+	List<ShapePosition> deletedPositions = new ArrayList<>();
+	
+	if(logic.canShapeBeRotated(gameState.getActualShape())) {
+		
+		deletedPositions = gameState.getActualShape().rotateShape();
+		logic.setLogicBoard(gameState.getLogicBoard());
+		logic.addDeletedPositionToLogicBoard(deletedPositions);
+		logic.addShapeToLogicBoard(gameState.getActualShape());
+		gameState.setLogicBoard(logic.getLogicBoard());
+		request.getSession().setAttribute(playerId, gameState);
+	}
+	
+	DisplayerData displayerData = new DisplayerData();
+	
+	createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
+	createDeletedPositionsOfDisplayerDataFromDeletedPositionsOfGameState(deletedPositions, displayerData);
+	
+	return displayerData;
+}
 
 	
 	

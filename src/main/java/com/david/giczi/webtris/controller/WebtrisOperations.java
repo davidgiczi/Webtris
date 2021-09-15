@@ -42,4 +42,11 @@ public class WebtrisOperations {
 		return new ResponseEntity<DisplayerData>(data, HttpStatus.OK);
 	}
 	
+	@GetMapping("/rotate")
+	public ResponseEntity<DisplayerData> rotate(@CookieValue(value = "playerId") String playerId, HttpServletRequest request){
+		
+		DisplayerData data = gameService.rotateShape(request, playerId);
+		
+		return new ResponseEntity<DisplayerData>(data, HttpStatus.OK);
+	}
 }
