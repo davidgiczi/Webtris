@@ -11,6 +11,14 @@
 	cache: 'no-cache'
 };
 
+getInitData().then(data =>{
+	
+	displayActualShape(data);
+	displayNextShape(data);
+	displayScore(data);
+	
+});
+
 document.querySelector(".left-btn").addEventListener("click", function(){
 	
 let startBtnText = document.querySelector(".btn-start-stop").innerText;
@@ -59,6 +67,58 @@ let startBtnText = document.querySelector(".btn-start-stop").innerText;
 }	
 } );
 
+document.querySelector(".down-btn").addEventListener("click", function(){
+	
+let startBtnText = document.querySelector(".btn-start-stop").innerText;
+
+	if(startBtnText === "Stop") {
+
+	fallDown().then(data => {
+	
+	clearDeletedPositions(data);
+	displayActualShape(data);
+	
+	});
+
+	}
+	
+} );
+
+function displayGame(){
+	
+	playGame().then(data =>{
+	
+	clearDeletedPositions(data);
+	displayActualShape(data);
+	
+	if(data.nextShape !== null){
+		
+		clearNextShapeDisplayer();
+		displayNextShape(data);
+	}
+	
+	});
+	
+}
+
+let playingGame;
+
+document.querySelector(".btn-start-stop").addEventListener("click", function(){
+	
+	let btnText = this.innerText;
+	
+	if("Start" === btnText){
+		
+	playingGame= setInterval(displayGame, 500);
+	
+	}
+	else if("Stop" === btnText){
+		
+		clearInterval(playingGame);
+	}
+	
+});
+
 async function getInitData(){
 
 const response = await fetch('/webtris/start', fecthOptions);
@@ -68,22 +128,23 @@ return data;
 }
 
 
-getInitData().then(data =>{
-	
-	displayActualShape(data);
-	displayNextShape(data);
-	displayScore(data);
-	
-});
-
-
-function displayActualShape(data){
+async function displayActualShape(data){
 	
 	for(let i = 0; i < data.actualShape.shapePositions.length; i++){
 
 		document.getElementById(data.actualShape.shapePositions[i])
 		.style.backgroundColor = data.actualShape.shapeColor;
 	}
+}
+
+function clearNextShapeDisplayer(){
+	
+	let nextShapeCells = document.querySelectorAll(".nextCell");
+
+	for(let i = 0; i < nextShapeCells.length; i++){
+		nextShapeCells[i].style.backgroundColor = "";
+	}
+
 }
 
 function displayNextShape(data){
@@ -99,7 +160,7 @@ function displayScore(data){
 	document.querySelector(".score-value").innerHTML = data.score;
 	}
 	
-function clearDeletedPositions(data){
+async function clearDeletedPositions(data){
 	
 	for(let i = 0; i < data.deletedPositions.length; i++){
 		document.getElementById(data.deletedPositions[i]).style.backgroundColor = "";
@@ -129,3 +190,21 @@ const data = await response.json();
 
 return data;
 }
+
+async function fallDown(){
+
+const response = await fetch('/webtris/fallDown', fecthOptions);
+const data = await response.json();
+
+return data;
+}
+
+async function playGame(){
+
+const response = await fetch('/webtris/play', fecthOptions);
+const data = await response.json();
+
+return data;
+}
+
+

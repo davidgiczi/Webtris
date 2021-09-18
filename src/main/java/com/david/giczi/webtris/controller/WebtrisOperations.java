@@ -49,4 +49,21 @@ public class WebtrisOperations {
 		
 		return new ResponseEntity<DisplayerData>(data, HttpStatus.OK);
 	}
+	
+	@GetMapping("/fallDown")
+	public ResponseEntity<DisplayerData> fallDown(@CookieValue(value = "playerId") String playerId, HttpServletRequest request){
+		
+		DisplayerData data = gameService.fallShapeDown(request, playerId);
+		
+		return new ResponseEntity<DisplayerData>(data, HttpStatus.OK);
+	}
+	
+	@GetMapping("/play")
+	public ResponseEntity<DisplayerData> playGame(@CookieValue(value = "playerId") String playerId, HttpServletRequest request){
+		
+		DisplayerData data = gameService.playGame(request, playerId);
+		
+		return new ResponseEntity<DisplayerData>(data, HttpStatus.OK);
+	}
+	
 }
