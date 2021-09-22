@@ -14,6 +14,7 @@ import com.david.giczi.webtris.model.ShapeFactory;
 import com.david.giczi.webtris.model.ShapePosition;
 import com.david.giczi.webtris.model.shapes.AbstractShape;
 
+
 @Service
 public class GameService {
 
@@ -22,6 +23,9 @@ public class GameService {
 	@Autowired
 	private PlayerService playerService;
 
+	
+	
+	
 	public DisplayerData initGame(HttpServletRequest request, String playerId) {
 
 		AbstractShape actualShape = ShapeFactory.getShape(true);
@@ -46,7 +50,8 @@ public class GameService {
 
 		GameState gameState = (GameState) request.getSession().getAttribute(playerId);
 		List<ShapePosition> deletedPositions = new ArrayList<>();
-
+		logic.setLogicBoard(gameState.getLogicBoard());
+		
 		if (logic.canShapeBeMovedToLeft(gameState.getActualShape())) {
 
 			deletedPositions = gameState.getActualShape().moveToLeft();
@@ -64,6 +69,7 @@ public class GameService {
 
 		GameState gameState = (GameState) request.getSession().getAttribute(playerId);
 		List<ShapePosition> deletedPositions = new ArrayList<>();
+		logic.setLogicBoard(gameState.getLogicBoard());
 
 		if (logic.canShapeBeMovedToRight(gameState.getActualShape())) {
 
@@ -82,6 +88,7 @@ public class GameService {
 
 		GameState gameState = (GameState) request.getSession().getAttribute(playerId);
 		List<ShapePosition> deletedPositions = new ArrayList<>();
+		logic.setLogicBoard(gameState.getLogicBoard());
 
 		if (logic.canShapeBeRotated(gameState.getActualShape())) {
 
@@ -100,7 +107,8 @@ public class GameService {
 
 		GameState gameState = (GameState) request.getSession().getAttribute(playerId);
 		List<ShapePosition> deletedPositions = new ArrayList<>();
-
+		logic.setLogicBoard(gameState.getLogicBoard());
+		
 		if (logic.canShapeBeMovedToDown(gameState.getActualShape())) {
 			deletedPositions = fallDown(gameState, deletedPositions);
 			request.getSession().setAttribute(playerId, gameState);
@@ -132,7 +140,8 @@ public class GameService {
 		GameState gameState = (GameState) request.getSession().getAttribute(playerId);
 		List<ShapePosition> deletedPositions = new ArrayList<>();
 		DisplayerData displayerData = new DisplayerData();
-
+		logic.setLogicBoard(gameState.getLogicBoard());
+		
 		if (logic.canShapeBeMovedToDown(gameState.getActualShape())) {
 
 			deletedPositions = fallDown(gameState, deletedPositions);

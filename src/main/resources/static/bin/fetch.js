@@ -2,7 +2,7 @@
  * 
  */
  
-
+ let options = [];
  
  let fecthOptions = {
 	
@@ -16,8 +16,42 @@ getInitData().then(data =>{
 	displayActualShape(data);
 	displayNextShape(data);
 	displayScore(data);
-	
 });
+
+async function sendOption(){
+const response = await fetch('/webtris/' + options.shift(), fecthOptions);
+const data = await response.json();
+
+return data;
+}
+
+function doNextOption(){
+	
+	let nextOption;
+	
+	if(options.length !== 0){
+		
+		nextOption = options.shift();
+		
+		switch(nextOption){
+			
+			case "rotate":
+			document.querySelector(".rotate-btn").click();
+			break;
+			case "right":
+			document.querySelector(".right-btn").click();
+			break;
+			case "left":
+			document.querySelector(".left-btn").click();
+			break;
+			case "fallDown":
+			document.querySelector(".down-btn").click();
+			break;
+			case "play":
+			displayGame();	
+		}		
+	}
+}
 
 document.querySelector(".left-btn").addEventListener("click", function(){
 	
@@ -25,29 +59,34 @@ let startBtnText = document.querySelector(".btn-start-stop").innerText;
 
 	if(startBtnText === "Stop") {
 	
-	goLeft().then(data => {
+	options.push("left");
+	
+	sendOption().then(data => {
 	
 	clearDeletedPositions(data);
 	displayActualShape(data);
 	
 	}
-);
+).then(doNextOption());
 }	
 } );
+
 
 document.querySelector(".right-btn").addEventListener("click", function(){
 
 let startBtnText = document.querySelector(".btn-start-stop").innerText;
 
-	if(startBtnText === "Stop") {	
-
-	goRight().then(data => {
+	if(startBtnText === "Stop") {
+			
+	options.push("right");
+	
+	sendOption().then(data => {
 	
 	clearDeletedPositions(data);
 	displayActualShape(data);
 		
 	}
-);
+).then(doNextOption());
 }
 } );
 
@@ -57,13 +96,15 @@ let startBtnText = document.querySelector(".btn-start-stop").innerText;
 
 	if(startBtnText === "Stop") {
 	
-	rotate().then(data => {
+	options.push("rotate");
+	
+	sendOption().then(data => {
 	
 	clearDeletedPositions(data);
 	displayActualShape(data);
 	
 	}
-);
+).then(doNextOption());
 }	
 } );
 
@@ -72,22 +113,25 @@ document.querySelector(".down-btn").addEventListener("click", function(){
 let startBtnText = document.querySelector(".btn-start-stop").innerText;
 
 	if(startBtnText === "Stop") {
-
-	fallDown().then(data => {
+	
+	options.push("fallDown");
+	
+	sendOption().then(data => {
 	
 	clearDeletedPositions(data);
 	displayActualShape(data);
 	
-	});
-
 	}
-	
+).then(doNextOption());
+	}
 } );
 
-function displayGame(){
+async function displayGame(){
 	
-	playGame().then(data =>{
+	options.push("play");
 	
+	sendOption().then(data =>{
+		
 	clearDeletedPositions(data);
 	displayActualShape(data);
 	
@@ -97,8 +141,8 @@ function displayGame(){
 		displayNextShape(data);
 	}
 	
-	});
-	
+	}
+	).then(doNextOption());
 }
 
 let playingGame;
@@ -128,7 +172,7 @@ return data;
 }
 
 
-async function displayActualShape(data){
+function displayActualShape(data){
 	
 	for(let i = 0; i < data.actualShape.shapePositions.length; i++){
 
@@ -160,51 +204,13 @@ function displayScore(data){
 	document.querySelector(".score-value").innerHTML = data.score;
 	}
 	
-async function clearDeletedPositions(data){
+function clearDeletedPositions(data){
 	
 	for(let i = 0; i < data.deletedPositions.length; i++){
 		document.getElementById(data.deletedPositions[i]).style.backgroundColor = "";
 	}
 }
 	
-async function goLeft(){
 
-const response = await fetch('/webtris/left', fecthOptions);
-const data = await response.json();
-
-return data;
-}
-
-async function goRight(){
-
-const response = await fetch('/webtris/right', fecthOptions);
-const data = await response.json();
-
-return data;
-}
-
-async function rotate(){
-
-const response = await fetch('/webtris/rotate', fecthOptions);
-const data = await response.json();
-
-return data;
-}
-
-async function fallDown(){
-
-const response = await fetch('/webtris/fallDown', fecthOptions);
-const data = await response.json();
-
-return data;
-}
-
-async function playGame(){
-
-const response = await fetch('/webtris/play', fecthOptions);
-const data = await response.json();
-
-return data;
-}
 
 

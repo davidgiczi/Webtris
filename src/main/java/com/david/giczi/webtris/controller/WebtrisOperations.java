@@ -61,6 +61,7 @@ public class WebtrisOperations {
 	@GetMapping("/play")
 	public ResponseEntity<DisplayerData> playGame(@CookieValue(value = "playerId") String playerId, HttpServletRequest request){
 		
+		
 		DisplayerData data = gameService.playGame(request, playerId);
 		
 		return new ResponseEntity<DisplayerData>(data, HttpStatus.OK);
