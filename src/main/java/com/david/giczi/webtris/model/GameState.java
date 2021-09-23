@@ -27,7 +27,6 @@ public class GameState {
 		this.actualShape = actualShape;
 	}
 
-
 	public AbstractShape getNextShape() {
 		return nextShape;
 	}
@@ -66,5 +65,4 @@ public class GameState {
 		this.score = score;
 	}
 
-	
 }

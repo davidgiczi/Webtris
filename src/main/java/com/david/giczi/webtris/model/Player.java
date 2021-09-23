@@ -21,7 +21,7 @@ public class Player implements Comparable<Player> {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthDate;
 	private int score;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private Date scoreDate;
 	
 	public Player() {
@@ -62,7 +62,7 @@ public class Player implements Comparable<Player> {
 
 	@Override
 	public int compareTo(Player o) {
-		return this.getScore() > o.getScore() ? 1 : this.getScore() == o.getScore() ? 0 : -1;
+		return this.getScore() < o.getScore() ? 1 : this.getScore() == o.getScore() ? 0 : -1;
 	}
 	
 }

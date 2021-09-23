@@ -3,6 +3,8 @@ package com.david.giczi.webtris.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.david.giczi.webtris.model.Player;
@@ -36,5 +38,9 @@ public class PlayerService {
 	
 	public int getScoreById(String id) {
 		return playerRepo.getScoreById(id);
+	}
+	
+	public List<Player> getAllPlayers(){
+		return playerRepo.findAll();
 	}
 }

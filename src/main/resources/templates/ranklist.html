@@ -38,19 +38,24 @@
 		</div>
 	</nav>
 	<br>
-	<div class="table-responsive table-striped">
+	<div class="table-responsive">
 	
-		<table class="table table-bordered resultlist">
+		<table class="table resultlist">
 			<thead>
 			<tr>
 			<th>Place</th>
 			<th>Player's Name</th>
 			<th>Score</th>
-			<th>Date of Result</th>
+			<th>Date of the Score</th>
 			</tr>
 			</thead>
 			<tbody>
-
+			<tr th:each="player : ${players}" th:classappend="${playerStat.odd ? '' : 'table-primary'}">
+			<td th:text="${playerStat.count}"></td>
+			<td th:text="${player.name}"></td>
+			<td th:text="${player.score}"></td>
+			<td th:text="${#dates.format(player.scoreDate, 'yyyy-MM-dd HH:mm')}"></td>
+			</tr>
 			</tbody>
 		</table>
 	</div>

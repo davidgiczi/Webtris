@@ -1,6 +1,8 @@
 package com.david.giczi.webtris.repository;
 
 import java.util.Date;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +20,6 @@ public interface PlayerRepository extends CrudRepository<Player, Long> {
 	@Query(value = "select score from players where id = :id" , nativeQuery = true)
 	int getScoreById(@Param("id") String playerId);
 	
+	List<Player> findAll();
 	
 }

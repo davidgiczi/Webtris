@@ -26,17 +26,12 @@ public class ShapeFactory {
     };
     
    
-    public static AbstractShape getShape(boolean isActualShape){
+    public static AbstractShape getShape(){
         
         AbstractShape shape;
         int percentValue = (int) (Math.random() * 105);
-        ShapePosition starterPosition;
-        if(isActualShape) {
-        starterPosition = new ShapePosition((int) (Math.random() * 7 + 2), 0);
-        }
-        else {
-        	starterPosition = new ShapePosition(2 , 0);
-        }
+        ShapePosition starterPosition = new ShapePosition(2 , 0);
+        
             if(0 <= percentValue && percentValue < 15) {
                 
                 shape = new PillarShape(starterPosition,

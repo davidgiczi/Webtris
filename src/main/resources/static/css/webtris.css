@@ -35,6 +35,7 @@ form#centered-form{
 
 td{
 	height: 25px;
+	text-align: center;
 }
 
 th{

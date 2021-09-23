@@ -61,14 +61,12 @@ let startBtnText = document.querySelector(".btn-start-stop").innerText;
 	
 	options.push("left");
 	
-	sendOption().then(data => {
-	
-	clearDeletedPositions(data);
-	displayActualShape(data);
-	
-	}
-).then(doNextOption());
-}	
+	sendOption().then(data => {clearDeletedPositions(data); return data})
+				.then(data => {
+				 displayActualShape(data)}
+				 ) 
+				.then(doNextOption());
+		}	
 } );
 
 
@@ -80,14 +78,12 @@ let startBtnText = document.querySelector(".btn-start-stop").innerText;
 			
 	options.push("right");
 	
-	sendOption().then(data => {
-	
-	clearDeletedPositions(data);
-	displayActualShape(data);
-		
-	}
-).then(doNextOption());
-}
+	sendOption().then(data => {clearDeletedPositions(data); return data})
+				.then(data => {
+				 displayActualShape(data)}
+				 )
+				.then(doNextOption());
+		}
 } );
 
 document.querySelector(".rotate-btn").addEventListener("click", function(){
@@ -98,14 +94,12 @@ let startBtnText = document.querySelector(".btn-start-stop").innerText;
 	
 	options.push("rotate");
 	
-	sendOption().then(data => {
-	
-	clearDeletedPositions(data);
-	displayActualShape(data);
-	
-	}
-).then(doNextOption());
-}	
+	sendOption().then(data => {clearDeletedPositions(data); return data})
+				.then(data => {
+				 displayActualShape(data)}
+				 )
+				.then(doNextOption());
+		}	
 } );
 
 document.querySelector(".down-btn").addEventListener("click", function(){
@@ -116,33 +110,30 @@ let startBtnText = document.querySelector(".btn-start-stop").innerText;
 	
 	options.push("fallDown");
 	
-	sendOption().then(data => {
-	
-	clearDeletedPositions(data);
-	displayActualShape(data);
-	
-	}
-).then(doNextOption());
+	sendOption().then(data => {clearDeletedPositions(data); return data})
+				.then(data =>{
+				 displayActualShape(data)}
+				 )
+				.then(doNextOption());
 	}
 } );
 
-async function displayGame(){
+function displayGame(){
 	
 	options.push("play");
 	
-	sendOption().then(data =>{
+	sendOption().then(data => {clearDeletedPositions(data); return data})
+				.then(data => {
+				 displayActualShape(data); return data})
+				.then(data =>{
+					
+						if(data.nextShape !== null){
 		
-	clearDeletedPositions(data);
-	displayActualShape(data);
-	
-	if(data.nextShape !== null){
-		
-		clearNextShapeDisplayer();
-		displayNextShape(data);
-	}
-	
-	}
-	).then(doNextOption());
+						clearNextShapeDisplayer()
+						displayNextShape(data)}
+						
+						})
+				.then(doNextOption());
 }
 
 let playingGame;
@@ -211,6 +202,5 @@ function clearDeletedPositions(data){
 	}
 }
 	
-
 
 

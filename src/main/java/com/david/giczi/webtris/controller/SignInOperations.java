@@ -2,7 +2,9 @@ package com.david.giczi.webtris.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +33,12 @@ public class SignInOperations {
 	}
 	
 	@RequestMapping("ranklist")
-	public String goRankListPage() {
+	public String goRankListPage(Model model) {
+		
+		List<Player> players = playerService.getAllPlayers();
+		Collections.sort(players);
+		model.addAttribute("players", players);
+	
 		return "ranklist";
 	}
 
@@ -50,6 +57,7 @@ public class SignInOperations {
 				player = new Player();
 				player.setName(playerName);
 				player.setBirthDate(dateOfBirth);
+				player.setScoreDate(new Date(System.currentTimeMillis()));
 				playerService.save(player);
 			}
 			
@@ -69,4 +77,5 @@ public class SignInOperations {
 
 		return "gameboard";
 	}
+
 }

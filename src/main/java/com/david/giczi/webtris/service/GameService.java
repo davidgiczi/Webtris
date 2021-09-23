@@ -23,13 +23,10 @@ public class GameService {
 	@Autowired
 	private PlayerService playerService;
 
-	
-	
-	
 	public DisplayerData initGame(HttpServletRequest request, String playerId) {
 
-		AbstractShape actualShape = ShapeFactory.getShape(true);
-		AbstractShape nextShape = ShapeFactory.getShape(false);
+		AbstractShape actualShape = ShapeFactory.getShape();
+		AbstractShape nextShape = ShapeFactory.getShape();
 		List<Boolean> logicBoard = initLogicBoard(actualShape);
 		List<AbstractShape> shapeStore = initShapeStore(actualShape);
 		GameState gameState = new GameState();
@@ -161,8 +158,8 @@ public class GameService {
 	
 	private void getNextRound(GameState gameState) {
 
-		AbstractShape actualShape = gameState.getNextShape();
-		AbstractShape nextShape = ShapeFactory.getShape(false);
+		AbstractShape actualShape = setActualShapeToRandomPlaceForDisplayer(gameState.getNextShape());
+		AbstractShape nextShape = ShapeFactory.getShape();
 		gameState.setActualShape(actualShape);
 		gameState.setNextShape(nextShape);
 		logic.setLogicBoard(gameState.getLogicBoard());
@@ -175,8 +172,23 @@ public class GameService {
 
 	private List<Boolean> initLogicBoard(AbstractShape actualShape) {
 		logic.initLogicBoard();
+		actualShape = setActualShapeToRandomPlaceForDisplayer(actualShape);
 		logic.addShapeToLogicBoard(actualShape);
 		return logic.getLogicBoard();
+	}
+	
+	public AbstractShape setActualShapeToRandomPlaceForDisplayer(AbstractShape actualShape) {
+		
+		int randDeltaX = (int) (Math.random() * 7);
+		for(int i = 0;  i < actualShape.shapeComponent.size(); i++) {
+			
+			int displayerPositionX = actualShape.shapeComponent.get(i).getDisplayer_x() + randDeltaX;
+			int displayerPositionY = actualShape.shapeComponent.get(i).getDisplayer_y();
+			
+			actualShape.shapeComponent.set(i, new ShapePosition(displayerPositionX, displayerPositionY));
+		}
+		
+		return actualShape;
 	}
 
 	private List<AbstractShape> initShapeStore(AbstractShape actualShape) {
