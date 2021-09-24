@@ -3,7 +3,6 @@
  */
  let speed = 500;
  let playingGame;
- let options = [];
  
  let fecthOptions = {
 	
@@ -19,8 +18,8 @@ getInitData().then(data =>{
 	displayScore(data);
 });
 
-async function sendOption(){
-const response = await fetch('/webtris/' + options.shift(), fecthOptions);
+async function sendOption(request){
+const response = await fetch('/webtris/' + request, fecthOptions);
 const data = await response.json();
 
 return data;
@@ -31,9 +30,10 @@ document.querySelector(".left-btn").addEventListener("click", function(){
 let startBtnText = document.querySelector(".btn-start-stop").innerText;
 
 	if(startBtnText === "Stop") {
-	
-	options.unshift("left");
-	
+		
+	clearInterval(playingGame);
+	displayData("left");
+	playingGame = setInterval(function(){displayData("play")}, speed);
 		}	
 } );
 
@@ -43,8 +43,10 @@ document.querySelector(".right-btn").addEventListener("click", function(){
 let startBtnText = document.querySelector(".btn-start-stop").innerText;
 
 	if(startBtnText === "Stop") {
-			
-	options.unshift("right");
+		
+	clearInterval(playingGame);
+	displayData("right");
+	playingGame = setInterval(function(){displayData("play")}, speed);
 	
 	}
 } );
@@ -54,8 +56,11 @@ document.querySelector(".rotate-btn").addEventListener("click", function(){
 let startBtnText = document.querySelector(".btn-start-stop").innerText;
 
 	if(startBtnText === "Stop") {
+		
+		clearInterval(playingGame);
+		displayData("rotate");
+		playingGame = setInterval(function(){displayData("play")}, speed);
 	
-	options.unshift("rotate");
 		}	
 } );
 
@@ -68,40 +73,38 @@ document.querySelector(".speed-btn").addEventListener("click", function(){
 		case "Speed: 1":
 		clearInterval(playingGame);
 		speed = 400;
-		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
+		startBtnText === "Stop" ? playingGame = setInterval(function(){displayData("play")}, speed) : "";
 		this.innerText = "Speed: 2";
 		break;
 		case "Speed: 2":
 		clearInterval(playingGame);
 		speed = 300;
-		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
+		startBtnText === "Stop" ? playingGame = setInterval(function(){displayData("play")}, speed) : "";
 		this.innerText = "Speed: 3";
 		break;
 		case "Speed: 3":
 		clearInterval(playingGame);
 		speed = 200;
-		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
+		startBtnText === "Stop" ? playingGame = setInterval(function(){displayData("play")}, speed) : "";
 		this.innerText = "Speed: 4";
 		break;
 		case "Speed: 4":
 		clearInterval(playingGame);
 		speed = 100;
-		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
+		startBtnText === "Stop" ? playingGame = setInterval(function(){displayData("play")}, speed) : "";
 		this.innerText = "Speed: 5";
 		break;
 		case "Speed: 5":
 		clearInterval(playingGame);
 		speed = 500;
-		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
+		startBtnText === "Stop" ? playingGame = setInterval(function(){displayData("play")}, speed) : "";
 		this.innerText = "Speed: 1";
 }
 	});
 
-function displayData(){
-	
-	options.push("play");
-	
-	sendOption().then(data => {clearDeletedPositions(data); return data})
+function displayData(instruction){
+		
+	sendOption(instruction).then(data => {clearDeletedPositions(data); return data})
 				.then(data => {displayActualShape(data); return data})
 				.then(data => {
 					
@@ -121,7 +124,7 @@ document.querySelector(".btn-start-stop").addEventListener("click", function(){
 	
 	if("Start" === btnText){
 		
-	playingGame= setInterval(displayData, speed);
+	playingGame= setInterval(function(){displayData("play")}, speed);
 	
 	}
 	else if("Stop" === btnText){
