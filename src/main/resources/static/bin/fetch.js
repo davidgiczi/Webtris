@@ -1,7 +1,8 @@
 /**
  * 
  */
- 
+ let speed = 500;
+ let playingGame;
  let options = [];
  
  let fecthOptions = {
@@ -25,47 +26,14 @@ const data = await response.json();
 return data;
 }
 
-function doNextOption(){
-	
-	let nextOption;
-	
-	if(options.length !== 0){
-		
-		nextOption = options.shift();
-		
-		switch(nextOption){
-			
-			case "rotate":
-			document.querySelector(".rotate-btn").click();
-			break;
-			case "right":
-			document.querySelector(".right-btn").click();
-			break;
-			case "left":
-			document.querySelector(".left-btn").click();
-			break;
-			case "fallDown":
-			document.querySelector(".down-btn").click();
-			break;
-			case "play":
-			displayGame();	
-		}		
-	}
-}
-
 document.querySelector(".left-btn").addEventListener("click", function(){
 	
 let startBtnText = document.querySelector(".btn-start-stop").innerText;
 
 	if(startBtnText === "Stop") {
 	
-	options.push("left");
+	options.unshift("left");
 	
-	sendOption().then(data => {clearDeletedPositions(data); return data})
-				.then(data => {
-				 displayActualShape(data)}
-				 ) 
-				.then(doNextOption());
 		}	
 } );
 
@@ -76,14 +44,9 @@ let startBtnText = document.querySelector(".btn-start-stop").innerText;
 
 	if(startBtnText === "Stop") {
 			
-	options.push("right");
+	options.unshift("right");
 	
-	sendOption().then(data => {clearDeletedPositions(data); return data})
-				.then(data => {
-				 displayActualShape(data)}
-				 )
-				.then(doNextOption());
-		}
+	}
 } );
 
 document.querySelector(".rotate-btn").addEventListener("click", function(){
@@ -92,51 +55,65 @@ let startBtnText = document.querySelector(".btn-start-stop").innerText;
 
 	if(startBtnText === "Stop") {
 	
-	options.push("rotate");
-	
-	sendOption().then(data => {clearDeletedPositions(data); return data})
-				.then(data => {
-				 displayActualShape(data)}
-				 )
-				.then(doNextOption());
+	options.unshift("rotate");
 		}	
 } );
 
-document.querySelector(".down-btn").addEventListener("click", function(){
+document.querySelector(".speed-btn").addEventListener("click", function(){
 	
-let startBtnText = document.querySelector(".btn-start-stop").innerText;
+		let btnText = this.innerText;
+		let startBtnText = document.querySelector(".btn-start-stop").innerText;
+		
+		switch(btnText){
+		case "Speed: 1":
+		clearInterval(playingGame);
+		speed = 400;
+		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
+		this.innerText = "Speed: 2";
+		break;
+		case "Speed: 2":
+		clearInterval(playingGame);
+		speed = 300;
+		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
+		this.innerText = "Speed: 3";
+		break;
+		case "Speed: 3":
+		clearInterval(playingGame);
+		speed = 200;
+		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
+		this.innerText = "Speed: 4";
+		break;
+		case "Speed: 4":
+		clearInterval(playingGame);
+		speed = 100;
+		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
+		this.innerText = "Speed: 5";
+		break;
+		case "Speed: 5":
+		clearInterval(playingGame);
+		speed = 500;
+		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
+		this.innerText = "Speed: 1";
+}
+	});
 
-	if(startBtnText === "Stop") {
-	
-	options.push("fallDown");
-	
-	sendOption().then(data => {clearDeletedPositions(data); return data})
-				.then(data =>{
-				 displayActualShape(data)}
-				 )
-				.then(doNextOption());
-	}
-} );
-
-function displayGame(){
+function displayData(){
 	
 	options.push("play");
 	
 	sendOption().then(data => {clearDeletedPositions(data); return data})
+				.then(data => {displayActualShape(data); return data})
 				.then(data => {
-				 displayActualShape(data); return data})
-				.then(data =>{
 					
 						if(data.nextShape !== null){
 		
 						clearNextShapeDisplayer()
 						displayNextShape(data)}
 						
-						})
-				.then(doNextOption());
+						});
+				
 }
 
-let playingGame;
 
 document.querySelector(".btn-start-stop").addEventListener("click", function(){
 	
@@ -144,7 +121,7 @@ document.querySelector(".btn-start-stop").addEventListener("click", function(){
 	
 	if("Start" === btnText){
 		
-	playingGame= setInterval(displayGame, 500);
+	playingGame= setInterval(displayData, speed);
 	
 	}
 	else if("Stop" === btnText){
