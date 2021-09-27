@@ -9,6 +9,7 @@ public class DisplayerData {
 	private List<Integer> deletedPositions;
 	private List<ShapeData> shapeStore;
 	private int score;
+	private boolean isTheEnd;
 
 	public DisplayerData() {
 	}
@@ -54,6 +55,16 @@ public class DisplayerData {
 
 	public void setScore(int score) {
 		this.score = score;
+	}
+
+
+	public boolean isTheEnd() {
+		return isTheEnd;
+	}
+
+
+	public void setTheEnd(boolean isTheEnd) {
+		this.isTheEnd = isTheEnd;
 	}
 
 	

@@ -2,6 +2,8 @@
  * 
  */
  let speed = 500;
+ let instructions = ["step"];
+ let dataStore = [null, null, null, null];
  let playingGame;
  
  let fecthOptions = {
@@ -28,27 +30,14 @@ return data;
 document.querySelector(".left-btn").addEventListener("click", function(){
 	
 let startBtnText = document.querySelector(".btn-start-stop").innerText;
-
-	if(startBtnText === "Stop") {
-		
-	clearInterval(playingGame);
-	displayData("left");
-	playingGame = setInterval(function(){displayData("play")}, speed);
-		}	
-} );
-
-
-document.querySelector(".right-btn").addEventListener("click", function(){
-
-let startBtnText = document.querySelector(".btn-start-stop").innerText;
-
-	if(startBtnText === "Stop") {
-		
-	clearInterval(playingGame);
-	displayData("right");
-	playingGame = setInterval(function(){displayData("play")}, speed);
 	
-	}
+	if(startBtnText === "Stop") {
+	
+		if(dataStore[0] === null){
+		instructions.unshift("left");
+		dataStore[0] = sendOption("left");
+		}
+		}	
 } );
 
 document.querySelector(".rotate-btn").addEventListener("click", function(){
@@ -57,12 +46,29 @@ let startBtnText = document.querySelector(".btn-start-stop").innerText;
 
 	if(startBtnText === "Stop") {
 		
-		clearInterval(playingGame);
-		displayData("rotate");
-		playingGame = setInterval(function(){displayData("play")}, speed);
-	
+		if(dataStore[1] === null){
+			instructions.unshift("rotate");
+			dataStore[1] = sendOption("rotate");
+		}
+		
 		}	
 } );
+
+document.querySelector(".right-btn").addEventListener("click", function(){
+	
+	
+let startBtnText = document.querySelector(".btn-start-stop").innerText;
+
+	if(startBtnText === "Stop") {
+	
+		if(dataStore[2] === null){
+			instructions.unshift("right");
+			dataStore[2] = sendOption("right");
+		}
+		
+	}
+} );
+
 
 document.querySelector(".speed-btn").addEventListener("click", function(){
 	
@@ -73,50 +79,100 @@ document.querySelector(".speed-btn").addEventListener("click", function(){
 		case "Speed: 1":
 		clearInterval(playingGame);
 		speed = 400;
-		startBtnText === "Stop" ? playingGame = setInterval(function(){displayData("play")}, speed) : "";
+		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
 		this.innerText = "Speed: 2";
 		break;
 		case "Speed: 2":
 		clearInterval(playingGame);
 		speed = 300;
-		startBtnText === "Stop" ? playingGame = setInterval(function(){displayData("play")}, speed) : "";
+		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
 		this.innerText = "Speed: 3";
 		break;
 		case "Speed: 3":
 		clearInterval(playingGame);
 		speed = 200;
-		startBtnText === "Stop" ? playingGame = setInterval(function(){displayData("play")}, speed) : "";
+		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
 		this.innerText = "Speed: 4";
 		break;
 		case "Speed: 4":
 		clearInterval(playingGame);
 		speed = 100;
-		startBtnText === "Stop" ? playingGame = setInterval(function(){displayData("play")}, speed) : "";
+		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
 		this.innerText = "Speed: 5";
 		break;
 		case "Speed: 5":
 		clearInterval(playingGame);
 		speed = 500;
-		startBtnText === "Stop" ? playingGame = setInterval(function(){displayData("play")}, speed) : "";
+		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
 		this.innerText = "Speed: 1";
 }
 	});
 
-function displayData(instruction){
+function stepNext(instruction){
+	
+		if(instruction === "step"){
+			dataStore[3] = sendOption("step");
+			instructions.push("step");
+		}
+	}
+
+function displayData(){
 		
-	sendOption(instruction).then(data => {clearDeletedPositions(data); return data})
-				.then(data => {displayActualShape(data); return data})
-				.then(data => {
-					
-						if(data.nextShape !== null){
+		let instruction = instructions.shift();
 		
-						clearNextShapeDisplayer()
-						displayNextShape(data)}
-						
-						});
-				
+		stepNext(instruction);
+			
+		if(dataStore[0] !== null && instruction === "left"){
+			
+			dataStore[0].then(data => {
+			
+			clearDeletedPositions(data);
+			displayActualShape(data);
+		}	
+			)
+		}
+		else if(dataStore[1] !== null && instruction === "rotate"){
+			
+			dataStore[1].then(data => {
+			
+			clearDeletedPositions(data);
+			displayActualShape(data);
+		}	
+			)
+		}
+		else if(dataStore[2] !== null && instruction === "right"){
+			
+			dataStore[2].then(data => {
+			
+			clearDeletedPositions(data);
+			displayActualShape(data);
+		}	
+			)
+		}
+		else if (dataStore[3] !== null && instruction === "step"){
+		
+		dataStore[3].then(data => {
+			
+			clearDeletedPositions(data);
+			displayActualShape(data);
+		
+			if(data.nextShape !== null){
+		
+				clearNextShapeDisplayer();
+				displayNextShape(data);
+			}
+		}	
+			)	
+				}
+			
+			clearDataStore();
 }
 
+function clearDataStore(){
+	for(let i = 0; i< dataStore.length; i++){
+				dataStore[i] = null;
+			}
+}
 
 document.querySelector(".btn-start-stop").addEventListener("click", function(){
 	
@@ -124,7 +180,7 @@ document.querySelector(".btn-start-stop").addEventListener("click", function(){
 	
 	if("Start" === btnText){
 		
-	playingGame= setInterval(function(){displayData("play")}, speed);
+	playingGame= setInterval(displayData, speed);
 	
 	}
 	else if("Stop" === btnText){

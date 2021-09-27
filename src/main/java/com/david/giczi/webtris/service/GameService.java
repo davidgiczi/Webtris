@@ -39,7 +39,7 @@ public class GameService {
 		DisplayerData displayerData = new DisplayerData();
 		createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
 		createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
-		displayerData.setScore(gameState.getScore());
+		displayerData.setScore(0);
 		return displayerData;
 	}
 
