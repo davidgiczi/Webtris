@@ -43,4 +43,8 @@ public class PlayerService {
 	public List<Player> getAllPlayers(){
 		return playerRepo.findAll();
 	}
+	
+	public Player getPlayerById(String id) {
+		return playerRepo.findById(Long.valueOf(id)).get();
+	}
 }

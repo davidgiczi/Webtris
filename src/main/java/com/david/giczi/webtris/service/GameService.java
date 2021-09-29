@@ -1,6 +1,7 @@
 package com.david.giczi.webtris.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.david.giczi.webtris.logic.TetrisLogic;
 import com.david.giczi.webtris.model.DisplayerData;
 import com.david.giczi.webtris.model.GameState;
+import com.david.giczi.webtris.model.Player;
 import com.david.giczi.webtris.model.ShapeData;
 import com.david.giczi.webtris.model.ShapeFactory;
 import com.david.giczi.webtris.model.ShapePosition;
@@ -34,7 +36,7 @@ public class GameService {
 		gameState.setNextShape(nextShape);
 		gameState.setLogicBoard(logicBoard);
 		gameState.setShapeStore(shapeStore);
-		gameState.setScore(playerService.getScoreById(playerId));
+		gameState.setScore(0);
 		request.getSession().setAttribute(playerId, gameState);
 		DisplayerData displayerData = new DisplayerData();
 		createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
@@ -148,7 +150,12 @@ public class GameService {
 			}
 			else if (logic.isTheEndOfTheGame()){
 				calcScore(gameState);
-				runEndOfTheGameProcess(gameState);
+				displayerData.setTheEnd(true);
+				Player player = playerService.getPlayerById(playerId);
+				int maxScore = player.getScore() < logic.getScore() ? logic.getScore() : player.getScore();
+				player.setScore(maxScore);
+				player.setScoreDate(new Date(System.currentTimeMillis()));
+				playerService.save(player);
 			}
 			else {
 				 calcScore(gameState);
@@ -186,10 +193,6 @@ public class GameService {
 	}
 
 	private void runFullRowProcess(GameState gameState) {
-		
-	}
-	
-	private void runEndOfTheGameProcess(GameState gameState) {
 		
 	}
 	
@@ -264,5 +267,17 @@ public class GameService {
 
 		displayerData.setShapeStore(shapeStore);
 	}
-
+	
+	public void saveActualScore(HttpServletRequest request, String playerId) {
+		
+		GameState gameState = (GameState) request.getSession().getAttribute(playerId);
+		Player player = playerService.getPlayerById(playerId);
+		
+		if(gameState.getScore() > player.getScore()) {
+			player.setScore(gameState.getScore());
+			player.setScoreDate(new Date(System.currentTimeMillis()));
+			playerService.save(player);
+		}
+	}
+		
 }

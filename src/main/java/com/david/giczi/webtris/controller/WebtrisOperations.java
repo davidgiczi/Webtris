@@ -17,6 +17,7 @@ public class WebtrisOperations {
 	
 	@Autowired
 	private GameService gameService;
+	
 
 	@GetMapping("/start")
 	public ResponseEntity<DisplayerData> init(@CookieValue(value = "playerId") String playerId, HttpServletRequest request) {
@@ -67,4 +68,11 @@ public class WebtrisOperations {
 		return new ResponseEntity<DisplayerData>(data, HttpStatus.OK);
 	}
 	
+	@GetMapping("/save")
+	public ResponseEntity<Object> saveActualScore(@CookieValue(value = "playerId") String playerId, HttpServletRequest request){
+		
+		gameService.saveActualScore(request, playerId);
+		
+		return new ResponseEntity<Object>(HttpStatus.OK);
+	}
 }

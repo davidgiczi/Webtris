@@ -168,6 +168,10 @@ function displayData(){
 				clearNextShapeDisplayer();
 				displayNextShape(data);
 			}
+			
+			endOfTheGame(data);
+			
+			
 		}	
 			)	
 			
@@ -176,6 +180,34 @@ function displayData(){
 			
 			clearDataStore();
 			
+}
+
+function endOfTheGame(game){
+	
+	if(game.theEnd){
+		
+		clearInterval(playingGame);
+		let scoreResult = game.score;
+		alert("The End! Next one?\n" +
+		"Your actual score is: " + scoreResult +".");
+		
+		let startBtn = document.querySelector(".btn-start-stop");
+		startBtn.innerText = "Start";
+		startBtn.classList.remove("btn-danger");
+		startBtn.classList.add("btn-success");
+		
+		clearDisplayer();
+		clearNextShapeDisplayer();
+		
+		getInitData().then(data =>{
+	
+		displayActualShape(data);
+		displayNextShape(data);
+		displayScore(data);
+});
+		
+	}
+	
 }
 
 function clearDataStore(){
@@ -228,6 +260,12 @@ function clearNextShapeDisplayer(){
 
 }
 
+function clearDisplayer(){
+	for(let i = 0; i < 200; i++){
+		document.getElementById(i).style.backgroundColor = "";
+	}
+}
+
 function displayNextShape(data){
 	
 	for(let i = 0; i < data.nextShape.shapePositions.length; i++){
@@ -247,4 +285,5 @@ function clearDeletedPositions(data){
 		document.getElementById(data.deletedPositions[i]).style.backgroundColor = "";
 	}
 }
+
 	

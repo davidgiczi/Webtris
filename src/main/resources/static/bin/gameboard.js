@@ -1,7 +1,7 @@
 /**
  * 
  */
- 
+
  if(document.getElementById("welcome-msg") != null){
     let msg = document.getElementById("welcome-msg").value;
     alert(msg);
@@ -32,6 +32,10 @@ for(let i = 0; i < tds.length; i++){
 	
 }
 
+}
+
+function saveActualScore(){
+	location.href = location.origin + "/webtris/save";
 }
 
 document.querySelector(".btn-success").addEventListener("click", function(){

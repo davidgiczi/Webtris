@@ -2,6 +2,7 @@ package com.david.giczi.webtris.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -22,4 +23,5 @@ public interface PlayerRepository extends CrudRepository<Player, Long> {
 	
 	List<Player> findAll();
 	
+	Optional<Player> findById(Long id);
 }

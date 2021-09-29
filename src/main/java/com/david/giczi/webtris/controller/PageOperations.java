@@ -22,7 +22,7 @@ import com.david.giczi.webtris.service.PlayerService;
 
 @Controller
 @RequestMapping("/webtris")
-public class SignInOperations {
+public class PageOperations {
 
 	@Autowired
 	private PlayerService playerService;
@@ -57,7 +57,6 @@ public class SignInOperations {
 				player = new Player();
 				player.setName(playerName);
 				player.setBirthDate(dateOfBirth);
-				player.setScoreDate(new Date(System.currentTimeMillis()));
 				playerService.save(player);
 			}
 			
@@ -78,4 +77,5 @@ public class SignInOperations {
 		return "gameboard";
 	}
 
+	
 }
