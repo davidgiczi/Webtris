@@ -1,6 +1,9 @@
 /**
  * 
  */
+ /**
+ * 
+ */
  let speed = 500;
  let instructions = ["step"];
  let dataStore = [null, null, null, null];
@@ -110,7 +113,7 @@ document.querySelector(".speed-btn").addEventListener("click", function(){
 
 function stepNext(instruction){
 	
-		if(instruction === "step"){
+		if(dataStore[3] === null && instruction === "step"){
 			dataStore[3] = sendOption("step");
 			instructions.push("step");
 		}
@@ -130,6 +133,7 @@ function displayData(){
 			displayActualShape(data);
 		}	
 			)
+			
 		}
 		else if(dataStore[1] !== null && instruction === "rotate"){
 			
@@ -139,6 +143,7 @@ function displayData(){
 			displayActualShape(data);
 		}	
 			)
+			
 		}
 		else if(dataStore[2] !== null && instruction === "right"){
 			
@@ -148,6 +153,7 @@ function displayData(){
 			displayActualShape(data);
 		}	
 			)
+			
 		}
 		else if (dataStore[3] !== null && instruction === "step"){
 		
@@ -155,6 +161,7 @@ function displayData(){
 			
 			clearDeletedPositions(data);
 			displayActualShape(data);
+			displayScore(data);
 		
 			if(data.nextShape !== null){
 		
@@ -163,9 +170,12 @@ function displayData(){
 			}
 		}	
 			)	
+			
 				}
 			
+			
 			clearDataStore();
+			
 }
 
 function clearDataStore(){
@@ -238,5 +248,3 @@ function clearDeletedPositions(data){
 	}
 }
 	
-
-

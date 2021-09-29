@@ -52,7 +52,6 @@ public class GameService {
 		if (logic.canShapeBeMovedToLeft(gameState.getActualShape())) {
 
 			deletedPositions = gameState.getActualShape().moveToLeft();
-			logic.setLogicBoard(gameState.getLogicBoard());
 			logic.addDeletedPositionToLogicBoard(deletedPositions);
 			logic.addShapeToLogicBoard(gameState.getActualShape());
 			gameState.setLogicBoard(logic.getLogicBoard());
@@ -71,7 +70,6 @@ public class GameService {
 		if (logic.canShapeBeMovedToRight(gameState.getActualShape())) {
 
 			deletedPositions = gameState.getActualShape().moveToRight();
-			logic.setLogicBoard(gameState.getLogicBoard());
 			logic.addDeletedPositionToLogicBoard(deletedPositions);
 			logic.addShapeToLogicBoard(gameState.getActualShape());
 			gameState.setLogicBoard(logic.getLogicBoard());
@@ -90,7 +88,6 @@ public class GameService {
 		if (logic.canShapeBeRotated(gameState.getActualShape())) {
 
 			deletedPositions = gameState.getActualShape().rotateShape();
-			logic.setLogicBoard(gameState.getLogicBoard());
 			logic.addDeletedPositionToLogicBoard(deletedPositions);
 			logic.addShapeToLogicBoard(gameState.getActualShape());
 			gameState.setLogicBoard(logic.getLogicBoard());
@@ -124,10 +121,8 @@ public class GameService {
 	private List<ShapePosition> fallDown(GameState gameState, List<ShapePosition> deletedPositions) {
 
 		deletedPositions = gameState.getActualShape().moveToDown();
-		logic.setLogicBoard(gameState.getLogicBoard());
 		logic.addDeletedPositionToLogicBoard(deletedPositions);
 		logic.addShapeToLogicBoard(gameState.getActualShape());
-		gameState.setLogicBoard(logic.getLogicBoard());
 
 		return deletedPositions;
 	}
@@ -145,16 +140,31 @@ public class GameService {
 
 		} else {
 			
-			 getNextRound(gameState);
-			 createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
+			List<Integer> fullRowIndexStore = logic.getCompleteTrueRowsIndex();	
+			
+			if( !fullRowIndexStore.isEmpty() ) {
+				
+				runFullRowProcess(gameState);
+			}
+			else if (logic.isTheEndOfTheGame()){
+				calcScore(gameState);
+				runEndOfTheGameProcess(gameState);
+			}
+			else {
+				 calcScore(gameState);
+				 getNextRound(gameState);
+				 createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
+			}
 		}
 		
 		request.getSession().setAttribute(playerId, gameState);
+		displayerData.setScore(gameState.getScore());
 		createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
 		createDeletedPositionsOfDisplayerDataFromDeletedPositionsOfGameState(deletedPositions, displayerData);
 
 		return displayerData;
 	}
+	
 	
 	private void getNextRound(GameState gameState) {
 
@@ -162,14 +172,27 @@ public class GameService {
 		AbstractShape nextShape = ShapeFactory.getShape();
 		gameState.setActualShape(actualShape);
 		gameState.setNextShape(nextShape);
-		logic.setLogicBoard(gameState.getLogicBoard());
 		logic.addShapeToLogicBoard(actualShape);
 		logic.setShapeStore(gameState.getShapeStore());
 		logic.addShapeToStore(actualShape);
 		gameState.setLogicBoard(logic.getLogicBoard());
 		gameState.setShapeStore(logic.getShapeStore());	
 	}
+	
+	private void calcScore(GameState gameState) {
+		logic.setScore(gameState.getScore());
+		logic.calcScore(gameState.getActualShape());
+		gameState.setScore(logic.getScore());
+	}
 
+	private void runFullRowProcess(GameState gameState) {
+		
+	}
+	
+	private void runEndOfTheGameProcess(GameState gameState) {
+		
+	}
+	
 	private List<Boolean> initLogicBoard(AbstractShape actualShape) {
 		logic.initLogicBoard();
 		actualShape = setActualShapeToRandomPlaceForDisplayer(actualShape);
