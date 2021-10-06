@@ -1494,10 +1494,12 @@ public class TetrisLogic {
                 if (shape.shapeComponent.contains(component)) {
                     shape.shapeComponent.remove(component);
                 }
+              
 
             });
         });
-
+        
+       
     }
 
     
@@ -1523,7 +1525,13 @@ public class TetrisLogic {
     public void refreshLogicBoard() {
 
         clearLogicBoard();
-
+        
+        for(int i = shapeStore.size() - 1; 0 >= i; i--) {
+        	if(shapeStore.get(i).shapeComponent.isEmpty()) {
+        		shapeStore.remove(i);
+        	}
+        }
+        
         shapeStore.forEach((shape) -> {
             addShapeToLogicBoard(shape);
         });

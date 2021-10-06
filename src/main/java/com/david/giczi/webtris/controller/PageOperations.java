@@ -57,6 +57,7 @@ public class PageOperations {
 				player = new Player();
 				player.setName(playerName);
 				player.setBirthDate(dateOfBirth);
+				player.setScoreDate(new Date(System.currentTimeMillis()));
 				playerService.save(player);
 			}
 			

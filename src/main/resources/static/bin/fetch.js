@@ -120,7 +120,7 @@ function stepNext(instruction){
 	}
 
 function displayData(){
-		
+				
 		let instruction = instructions.shift();
 		
 		stepNext(instruction);
@@ -162,11 +162,20 @@ function displayData(){
 			clearDeletedPositions(data);
 			displayActualShape(data);
 			displayScore(data);
-		
+			
 			if(data.nextShape !== null){
-		
+				
 				clearNextShapeDisplayer();
 				displayNextShape(data);
+				
+			}
+		
+			if(data.shapeStore !== null){
+				
+				clearNextShapeDisplayer();
+				displayNextShape(data);
+				clearDisplayer();
+				displayShapeStore(data);
 			}
 			
 			endOfTheGame(data);
@@ -286,4 +295,13 @@ function clearDeletedPositions(data){
 	}
 }
 
+function displayShapeStore(data){
+	
+	for(let i = 0; i < data.shapeStore.length; i++){
+		for(let j = 0; j < data.shapeStore[i].shapePositions.length; j++){
+		document.getElementById(data.shapeStore[i].shapePositions[j])
+		.style.backgroundColor = data.shapeStore[i].shapeColor;
+		}
+	}
+}
 	

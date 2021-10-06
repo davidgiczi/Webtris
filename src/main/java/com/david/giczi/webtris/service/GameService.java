@@ -26,7 +26,7 @@ public class GameService {
 	private PlayerService playerService;
 
 	public DisplayerData initGame(HttpServletRequest request, String playerId) {
-
+		
 		AbstractShape actualShape = ShapeFactory.getShape();
 		AbstractShape nextShape = ShapeFactory.getShape();
 		List<Boolean> logicBoard = initLogicBoard(actualShape);
@@ -42,6 +42,7 @@ public class GameService {
 		createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
 		createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
 		displayerData.setScore(0);
+		
 		return displayerData;
 	}
 
@@ -146,7 +147,10 @@ public class GameService {
 			
 			if( !fullRowIndexStore.isEmpty() ) {
 				
-				runFullRowProcess(gameState);
+				runFullRowProcess(gameState, fullRowIndexStore);
+				getNextRound(gameState);
+				createDisplayerDataInCaseOfFullRow(gameState, displayerData);
+				createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
 			}
 			else if (logic.isTheEndOfTheGame()){
 				calcScore(gameState);
@@ -162,6 +166,7 @@ public class GameService {
 				 getNextRound(gameState);
 				 createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
 			}
+			
 		}
 		
 		request.getSession().setAttribute(playerId, gameState);
@@ -192,7 +197,14 @@ public class GameService {
 		gameState.setScore(logic.getScore());
 	}
 
-	private void runFullRowProcess(GameState gameState) {
+	private void runFullRowProcess(GameState gameState, List<Integer> fullRowIndexStore) {
+		
+		int score = gameState.getScore() + 100 *  fullRowIndexStore.size();
+		gameState.setScore(score);
+		logic.setShapeStore(gameState.getShapeStore());
+		logic.deleteCompleteTrueRowsFromShapeComponent(fullRowIndexStore);
+		logic.increaseRowNumberForShapeComponentInShapeStore(fullRowIndexStore);
+		logic.refreshLogicBoard();
 		
 	}
 	
@@ -218,6 +230,7 @@ public class GameService {
 	}
 
 	private List<AbstractShape> initShapeStore(AbstractShape actualShape) {
+		logic.setShapeStore(null);
 		logic.addShapeToStore(actualShape);
 		return logic.getShapeStore();
 	}
