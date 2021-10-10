@@ -138,9 +138,9 @@ public class GameService {
 		logic.setLogicBoard(gameState.getLogicBoard());
 		
 		if (logic.canShapeBeMovedToDown(gameState.getActualShape())) {
-
-			deletedPositions = fallDown(gameState, deletedPositions);
-
+			
+			deletedPositions = fallDown(gameState, deletedPositions);			
+			
 		} else {
 			
 			List<Integer> fullRowIndexStore = logic.getCompleteTrueRowsIndex();	
@@ -170,6 +170,9 @@ public class GameService {
 		}
 		
 		request.getSession().setAttribute(playerId, gameState);
+		if(!logic.canShapeBeMovedToDown(gameState.getActualShape())) {
+		displayerData.setStandShape(true);
+		}
 		displayerData.setScore(gameState.getScore());
 		createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
 		createDeletedPositionsOfDisplayerDataFromDeletedPositionsOfGameState(deletedPositions, displayerData);
@@ -244,6 +247,7 @@ public class GameService {
 		actualShape.setShapePositions(actualShapePositions);
 		actualShape.setShapeColor(gameState.getActualShape().shapeColor);
 		displayerData.setActualShape(actualShape);
+		
 	}
 
 	private void createNextShapeOfDisplayerDataFromNextShapeOfGameState(GameState gameState,

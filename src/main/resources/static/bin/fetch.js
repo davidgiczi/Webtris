@@ -8,6 +8,7 @@
  let instructions = ["step"];
  let dataStore = [null, null, null, null];
  let playingGame;
+ let displayedShapePositions = [];
  
  let fecthOptions = {
 	
@@ -120,16 +121,17 @@ function stepNext(instruction){
 	}
 
 function displayData(){
-				
+		
 		let instruction = instructions.shift();
 		
 		stepNext(instruction);
-			
+		
 		if(dataStore[0] !== null && instruction === "left"){
 			
 			dataStore[0].then(data => {
 			
-			clearDeletedPositions(data);
+			refreshDisplayer(data);
+			clearDeletedPositions(data)	
 			displayActualShape(data);
 		}	
 			)
@@ -139,7 +141,8 @@ function displayData(){
 			
 			dataStore[1].then(data => {
 			
-			clearDeletedPositions(data);
+			refreshDisplayer(data);
+			clearDeletedPositions(data)	
 			displayActualShape(data);
 		}	
 			)
@@ -149,7 +152,8 @@ function displayData(){
 			
 			dataStore[2].then(data => {
 			
-			clearDeletedPositions(data);
+			refreshDisplayer(data);
+			clearDeletedPositions(data)
 			displayActualShape(data);
 		}	
 			)
@@ -159,7 +163,8 @@ function displayData(){
 		
 		dataStore[3].then(data => {
 			
-			clearDeletedPositions(data);
+			refreshDisplayer(data);	
+			clearDeletedPositions(data)
 			displayActualShape(data);
 			displayScore(data);
 			
@@ -275,6 +280,43 @@ function clearDisplayer(){
 	}
 }
 
+function refreshDisplayer(data){
+		
+	if(data.standShape){	
+	
+	for(let i = 0; i < data.actualShape.shapePositions.length; i++){
+		displayedShapePositions.push(data.actualShape.shapePositions[i]);
+	}
+	
+	}
+	
+	if(data.shapeStore !== null){
+		
+		displayedShapePositions = [];
+		
+		for(let i = 0; i < data.shapeStore.length; i++){
+			for(let j = 0; j < data.shapeStore[i].shapePositions.length; j++){
+	
+			displayedShapePositions.push(data.shapeStore[i].shapePositions[j]);
+			
+		}
+			}
+				
+	}
+		
+	for(let i = 0; i < 200; i++){
+		for(let j = 0; j < displayedShapePositions.lenght; j++){
+			
+			if(i !== displayedShapePositions[j]){
+				document.getElementById(i).style.backgroundColor = "";
+			}
+			
+		}
+		
+	}	
+	
+}
+
 function displayNextShape(data){
 	
 	for(let i = 0; i < data.nextShape.shapePositions.length; i++){
@@ -304,4 +346,6 @@ function displayShapeStore(data){
 		}
 	}
 }
+
+
 	

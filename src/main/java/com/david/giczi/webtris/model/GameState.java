@@ -35,7 +35,7 @@ public class GameState {
 	public void setNextShape(AbstractShape nextShape) {
 		this.nextShape = nextShape;
 	}
-
+	
 
 	public List<Boolean> getLogicBoard() {
 		return logicBoard;
