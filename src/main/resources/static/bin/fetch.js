@@ -8,7 +8,7 @@
  let instructions = ["step"];
  let dataStore = [null, null, null, null];
  let playingGame;
- let displayedShapePositions = [];
+ 
  
  let fecthOptions = {
 	
@@ -131,7 +131,6 @@ function displayData(){
 			dataStore[0].then(data => {
 			
 			refreshDisplayer(data);
-			clearDeletedPositions(data)	
 			displayActualShape(data);
 		}	
 			)
@@ -140,9 +139,8 @@ function displayData(){
 		else if(dataStore[1] !== null && instruction === "rotate"){
 			
 			dataStore[1].then(data => {
-			
+		
 			refreshDisplayer(data);
-			clearDeletedPositions(data)	
 			displayActualShape(data);
 		}	
 			)
@@ -153,8 +151,8 @@ function displayData(){
 			dataStore[2].then(data => {
 			
 			refreshDisplayer(data);
-			clearDeletedPositions(data)
 			displayActualShape(data);
+
 		}	
 			)
 			
@@ -163,8 +161,7 @@ function displayData(){
 		
 		dataStore[3].then(data => {
 			
-			refreshDisplayer(data);	
-			clearDeletedPositions(data)
+			refreshDisplayer(data);
 			displayActualShape(data);
 			displayScore(data);
 			
@@ -176,7 +173,7 @@ function displayData(){
 			}
 		
 			if(data.shapeStore !== null){
-				
+						
 				clearNextShapeDisplayer();
 				displayNextShape(data);
 				clearDisplayer();
@@ -188,14 +185,10 @@ function displayData(){
 			
 		}	
 			)	
-			
-				}
-			
-			
+	}		
 			clearDataStore();
-			
+					
 }
-
 function endOfTheGame(game){
 	
 	if(game.theEnd){
@@ -281,40 +274,12 @@ function clearDisplayer(){
 }
 
 function refreshDisplayer(data){
-		
-	if(data.standShape){	
-	
-	for(let i = 0; i < data.actualShape.shapePositions.length; i++){
-		displayedShapePositions.push(data.actualShape.shapePositions[i]);
-	}
-	
-	}
-	
-	if(data.shapeStore !== null){
-		
-		displayedShapePositions = [];
-		
-		for(let i = 0; i < data.shapeStore.length; i++){
-			for(let j = 0; j < data.shapeStore[i].shapePositions.length; j++){
-	
-			displayedShapePositions.push(data.shapeStore[i].shapePositions[j]);
 			
-		}
-			}
-				
-	}
-		
 	for(let i = 0; i < 200; i++){
-		for(let j = 0; j < displayedShapePositions.lenght; j++){
-			
-			if(i !== displayedShapePositions[j]){
-				document.getElementById(i).style.backgroundColor = "";
-			}
-			
+		if(!data.displayedPositions.includes(i)){
+			document.getElementById(i).style.backgroundColor = "";
 		}
-		
-	}	
-	
+	}
 }
 
 function displayNextShape(data){
@@ -330,12 +295,6 @@ function displayScore(data){
 	document.querySelector(".score-value").innerHTML = data.score;
 	}
 	
-function clearDeletedPositions(data){
-	
-	for(let i = 0; i < data.deletedPositions.length; i++){
-		document.getElementById(data.deletedPositions[i]).style.backgroundColor = "";
-	}
-}
 
 function displayShapeStore(data){
 	

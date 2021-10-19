@@ -30,7 +30,7 @@ public class GameService {
 		AbstractShape actualShape = ShapeFactory.getShape();
 		AbstractShape nextShape = ShapeFactory.getShape();
 		List<Boolean> logicBoard = initLogicBoard(actualShape);
-		List<AbstractShape> shapeStore = initShapeStore(actualShape);
+		List<AbstractShape> shapeStore = initShapeStore();
 		GameState gameState = new GameState();
 		gameState.setActualShape(actualShape);
 		gameState.setNextShape(nextShape);
@@ -61,7 +61,7 @@ public class GameService {
 			request.getSession().setAttribute(playerId, gameState);
 		}
 
-		return createDisplayerDataForShapeMoving(gameState, deletedPositions);
+		return createDisplayerDataForShapeMoving(gameState);
 	}
 
 	public synchronized DisplayerData goShapeRight(HttpServletRequest request, String playerId) {
@@ -79,7 +79,7 @@ public class GameService {
 			request.getSession().setAttribute(playerId, gameState);
 		}
 
-		return createDisplayerDataForShapeMoving(gameState, deletedPositions);
+		return createDisplayerDataForShapeMoving(gameState);
 	}
 
 	public synchronized DisplayerData rotateShape(HttpServletRequest request, String playerId) {
@@ -97,7 +97,7 @@ public class GameService {
 			request.getSession().setAttribute(playerId, gameState);
 		}
 
-		return createDisplayerDataForShapeMoving(gameState, deletedPositions);
+		return createDisplayerDataForShapeMoving(gameState);
 	}
 
 	public synchronized DisplayerData fallShapeDown(HttpServletRequest request, String playerId) {
@@ -111,14 +111,26 @@ public class GameService {
 			request.getSession().setAttribute(playerId, gameState);
 		}
 
-		return createDisplayerDataForShapeMoving(gameState, deletedPositions);
+		return createDisplayerDataForShapeMoving(gameState);
 	}
 
-	private DisplayerData createDisplayerDataForShapeMoving(GameState gameState, List<ShapePosition> deletedPositions) {
+	private DisplayerData createDisplayerDataForShapeMoving(GameState gameState) {
 		DisplayerData displayerData = new DisplayerData();
 		createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
-		createDeletedPositionsOfDisplayerDataFromDeletedPositionsOfGameState(deletedPositions, displayerData);
+		addDisplayedPositionsToDisplayerData(displayerData);
 		return displayerData;
+	}
+
+	private void addDisplayedPositionsToDisplayerData(DisplayerData displayerData) {
+		
+		List<Integer> displayedPositions = new ArrayList<>();
+		
+		for(int i = 0; i < logic.getLogicBoard().size(); i++) {
+			if(logic.getLogicBoard().get(i)) {
+				displayedPositions.add(i);
+			}
+		}
+		displayerData.setDisplayedPositions(displayedPositions);
 	}
 
 	private List<ShapePosition> fallDown(GameState gameState, List<ShapePosition> deletedPositions) {
@@ -170,16 +182,13 @@ public class GameService {
 		}
 		
 		request.getSession().setAttribute(playerId, gameState);
-		if(!logic.canShapeBeMovedToDown(gameState.getActualShape())) {
-		displayerData.setStandShape(true);
-		}
 		displayerData.setScore(gameState.getScore());
+		addDisplayedPositionsToDisplayerData(displayerData);
 		createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
-		createDeletedPositionsOfDisplayerDataFromDeletedPositionsOfGameState(deletedPositions, displayerData);
-
+		
 		return displayerData;
 	}
-	
+
 	
 	private void getNextRound(GameState gameState) {
 
@@ -188,9 +197,9 @@ public class GameService {
 		gameState.setActualShape(actualShape);
 		gameState.setNextShape(nextShape);
 		logic.addShapeToLogicBoard(actualShape);
-		logic.setShapeStore(gameState.getShapeStore());
-		logic.addShapeToStore(actualShape);
 		gameState.setLogicBoard(logic.getLogicBoard());
+		logic.setShapeStore(gameState.getShapeStore());
+		logic.addShapeToStore(gameState.getActualShape());
 		gameState.setShapeStore(logic.getShapeStore());	
 	}
 	
@@ -232,9 +241,9 @@ public class GameService {
 		return actualShape;
 	}
 
-	private List<AbstractShape> initShapeStore(AbstractShape actualShape) {
+	private List<AbstractShape> initShapeStore() {
 		logic.setShapeStore(null);
-		logic.addShapeToStore(actualShape);
+		logic.addShapeToStore(null);
 		return logic.getShapeStore();
 	}
 
@@ -259,14 +268,6 @@ public class GameService {
 		nextShape.setShapePositions(nextShapePositions);
 		nextShape.setShapeColor(gameState.getNextShape().shapeColor);
 		displayerData.setNextShape(nextShape);
-	}
-
-	private void createDeletedPositionsOfDisplayerDataFromDeletedPositionsOfGameState(
-			List<ShapePosition> deletedPositions, DisplayerData displayerData) {
-
-		List<Integer> deletedPositionsOfDisplayerData = deletedPositions.stream().map(p -> p.getLogicBoardIndex())
-				.collect(Collectors.toList());
-		displayerData.setDeletedPositions(deletedPositionsOfDisplayerData);
 	}
 
 	private void createDisplayerDataInCaseOfFullRow(GameState gameState, DisplayerData displayerData) {

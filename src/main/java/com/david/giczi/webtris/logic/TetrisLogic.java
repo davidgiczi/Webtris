@@ -93,7 +93,9 @@ public class TetrisLogic {
     	if(shapeStore == null) {
     		shapeStore = new ArrayList<>();
     	}
+    	if(shape != null) {
         shapeStore.add(shape);
+    	}
     }
 
     

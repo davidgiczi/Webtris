@@ -6,11 +6,11 @@ public class DisplayerData {
 
 	private ShapeData actualShape;
 	private ShapeData nextShape;
-	private List<Integer> deletedPositions;
+	private List<Integer> displayedPositions;
 	private List<ShapeData> shapeStore;
 	private int score;
 	private boolean isTheEnd;
-	private boolean isStandShape;
+	
 
 	public DisplayerData() {
 	}
@@ -32,14 +32,13 @@ public class DisplayerData {
 		this.nextShape = nextShape;
 	}
 
-
-	public List<Integer> getDeletedPositions() {
-		return deletedPositions;
+	public List<Integer> getDisplayedPositions() {
+		return displayedPositions;
 	}
 
 
-	public void setDeletedPositions(List<Integer> deletedPositions) {
-		this.deletedPositions = deletedPositions;
+	public void setDisplayedPositions(List<Integer> displayedPositions) {
+		this.displayedPositions = displayedPositions;
 	}
 
 
@@ -71,14 +70,5 @@ public class DisplayerData {
 		this.isTheEnd = isTheEnd;
 	}
 
-
-	public boolean isStandShape() {
-		return isStandShape;
-	}
-
-
-	public void setStandShape(boolean isStandShape) {
-		this.isStandShape = isStandShape;
-	}
 	
 }
