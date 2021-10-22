@@ -14,30 +14,25 @@
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light nav">
 		<div class="container-fluid row">
-
-			<div class="col-7 col-xxl-1">
-				<a class="nav-link git" href="https://github.com/davidgiczi/Webtris"
+		
+			<div class="col-6 col-xxl-1">
+				<a class="nav-link git speed" onclick="growSpeed()"
 					tabindex="-1" aria-disabled="true"
-					title="GitHub repository of WEBTRIS Game">&nbsp;&nbsp;&nbsp;GitHub</a>
-
+					title="Speed growing">Speed: 1</a>
 			</div>
+			
+				<div class="col-4 col-xxl-10"></div>
 				
-				<div class="col-7 col-xxl-2">
+				<div class="col-2 col-xxl-1">
 				<a class="nav-link git" onclick="saveActualScore()" href="/webtris"
 					tabindex="-1" aria-disabled="true"
-					title="Startpage of the Game">&nbsp;&nbsp;&nbsp;Home</a>
+					title="Go Startpage of the Game">Home</a>
 
 			</div>
-
-			<div class="col-7 col-xxl-9 right">
-				<a class="nav-link git" href="https://github.com/davidgiczi"
-					tabindex="-1" aria-disabled="true" title="My GitHub repository"><span>&copy;&nbsp;2021&nbsp;Dávid
-						Giczi</span></a>
-
-			</div>
+			
 		</div>
 	</nav>
-	
+<br>
 <div class="containaer">
 	<div class="row">
 	<div class="col-xxl-5 col-4"></div>
@@ -61,14 +56,14 @@
 	<div class="first-row nextCell" id="0-next"></div><div class="first-row nextCell" id="1-next"></div><div class="first-row nextCell" id="2-next"></div><div class="first-row nextCell" id="3-next"></div>
 	<div class="second-row nextCell" id="10-next"></div><div class="second-row nextCell" id="11-next"></div><div class="second-row nextCell" id="12-next"></div><div class="second-row nextCell" id="13-next"></div>
 	</div>
-
+	
 	<div class="containaer">
 	<div class="row">
 	<div class="col-xxl-5 col-5"> </div>
 	<button type="button" class="btn btn-outline-danger col-xxl-2 col-2 rotate-btn"><i class="fas fa-sync-alt"></i></button>
 	<div class="col-xxl-5 col-5"> </div>
 	</div>
-	
+	<br>
 	<div class="row">
 	<div class="col-xxl-3 col-2"> </div>
 	<button type="button" class="btn btn-outline-danger col-xxl-1 col-2 left-btn"><i class="fas fa-angle-double-left"></i></button>
@@ -79,10 +74,10 @@
 	<div class="col-xxl-3 col-3"></div>
 	<div></div>
 	</div>
-	
+	<br>
 	<div class="row">
 	<div class="col-xxl-5 col-5"> </div>
-	<button type="button" class="btn btn-outline-danger col-xxl-2 col-2 speed-btn">Speed: 1</button>
+	<button type="button" class="btn btn-outline-danger col-xxl-2 col-2"><i class="fas fa-angle-double-down"></i></button>
 	<div class="col-xxl-5 col-5"> </div>
 	</div>
 	</div>

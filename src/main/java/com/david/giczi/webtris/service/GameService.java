@@ -1,7 +1,9 @@
 package com.david.giczi.webtris.service;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
@@ -170,7 +172,8 @@ public class GameService {
 				Player player = playerService.getPlayerById(playerId);
 				int maxScore = player.getScore() < logic.getScore() ? logic.getScore() : player.getScore();
 				player.setScore(maxScore);
-				player.setScoreDate(new Date(System.currentTimeMillis()));
+				long m = System.currentTimeMillis();
+				player.setScoreDate(ZonedDateTime.ofInstant(Instant.ofEpochMilli(m), ZoneId.systemDefault()));
 				playerService.save(player);
 			}
 			else {
@@ -293,7 +296,8 @@ public class GameService {
 		
 		if(gameState.getScore() > player.getScore()) {
 			player.setScore(gameState.getScore());
-			player.setScoreDate(new Date(System.currentTimeMillis()));
+			long m = System.currentTimeMillis();
+			player.setScoreDate(ZonedDateTime.ofInstant(Instant.ofEpochMilli(m), ZoneId.systemDefault()));
 			playerService.save(player);
 		}
 	}

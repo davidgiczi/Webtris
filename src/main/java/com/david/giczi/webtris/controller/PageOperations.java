@@ -2,6 +2,9 @@ package com.david.giczi.webtris.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +60,8 @@ public class PageOperations {
 				player = new Player();
 				player.setName(playerName);
 				player.setBirthDate(dateOfBirth);
-				player.setScoreDate(new Date(System.currentTimeMillis()));
+				long m = System.currentTimeMillis();
+				player.setScoreDate(ZonedDateTime.ofInstant(Instant.ofEpochMilli(m), ZoneId.systemDefault()));
 				playerService.save(player);
 			}
 			

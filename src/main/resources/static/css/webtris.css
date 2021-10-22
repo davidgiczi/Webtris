@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 .git {
+	
 	color: gray;
 }
 .webtris{
@@ -8,7 +9,7 @@
 
 	}
 font {
-	padding: 10px;
+	padding: 8px;
 	font-size: 45px;
 }
 
@@ -18,9 +19,6 @@ font {
 
 form#centered-form{
 	margin: 0 auto;
-}
-.right{
-	text-align: right;
 }
 
 .resultlist{

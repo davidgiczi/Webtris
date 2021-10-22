@@ -74,43 +74,44 @@ let startBtnText = document.querySelector(".btn-start-stop").innerText;
 } );
 
 
-document.querySelector(".speed-btn").addEventListener("click", function(){
+ function growSpeed(){
+ 
 	
-		let btnText = this.innerText;
+		let speedText = document.querySelector(".speed").innerText;
 		let startBtnText = document.querySelector(".btn-start-stop").innerText;
 		
-		switch(btnText){
+		switch(speedText){
 		case "Speed: 1":
 		clearInterval(playingGame);
 		speed = 400;
 		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
-		this.innerText = "Speed: 2";
+		document.querySelector(".speed").innerText = "Speed: 2";
 		break;
 		case "Speed: 2":
 		clearInterval(playingGame);
 		speed = 300;
 		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
-		this.innerText = "Speed: 3";
+		document.querySelector(".speed").innerText = "Speed: 3";
 		break;
 		case "Speed: 3":
 		clearInterval(playingGame);
 		speed = 200;
 		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
-		this.innerText = "Speed: 4";
+		document.querySelector(".speed").innerText = "Speed: 4";
 		break;
 		case "Speed: 4":
 		clearInterval(playingGame);
 		speed = 100;
 		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
-		this.innerText = "Speed: 5";
+		document.querySelector(".speed").innerText = "Speed: 5";
 		break;
 		case "Speed: 5":
 		clearInterval(playingGame);
 		speed = 500;
 		startBtnText === "Stop" ? playingGame = setInterval(displayData, speed) : "";
-		this.innerText = "Speed: 1";
+		document.querySelector(".speed").innerText = "Speed: 1";
 }
-	});
+	}
 
 function stepNext(instruction){
 	
