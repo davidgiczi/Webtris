@@ -1,9 +1,6 @@
 /**
  * 
  */
- /**
- * 
- */
  let speed = 500;
  let instructions = ["step"];
  let dataStore = [null, null, null, null];
@@ -73,6 +70,20 @@ let startBtnText = document.querySelector(".btn-start-stop").innerText;
 	}
 } );
 
+document.querySelector(".fall-down-btn").addEventListener("click", function(){
+	
+	
+let startBtnText = document.querySelector(".btn-start-stop").innerText;
+
+	if(startBtnText === "Stop") {
+		
+			sendOption("fallDown").then(data => {
+		
+			refreshDisplayer(data);
+			displayActualShape(data);
+		});
+	}
+});
 
  function growSpeed(){
  
@@ -182,14 +193,15 @@ function displayData(){
 			}
 			
 			endOfTheGame(data);
-			
-			
+					
 		}	
 			)	
-	}		
-			clearDataStore();
-					
+	}
+			
+			clearDataStore();				
 }
+
+
 function endOfTheGame(game){
 	
 	if(game.theEnd){
@@ -306,6 +318,3 @@ function displayShapeStore(data){
 		}
 	}
 }
-
-
-	
