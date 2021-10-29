@@ -20,10 +20,17 @@
 
 			</div>
 			
-			<div class="col-7 col-xxl-2">
+			<div class="col-7 col-xxl-1">
 				<a class="nav-link git" href="/webtris/ranklist"
 					tabindex="-1" aria-disabled="true"
 					title="Go Rank list of the Game">Rank List</a>
+
+			</div>
+			
+			<div class="col-7 col-xxl-1">
+				<a class="nav-link git regist"  onclick="regist()"
+					tabindex="-1" aria-disabled="true"
+					title="Registration">Registration</a>
 
 			</div>
 			
@@ -51,8 +58,15 @@
 		</div>
 
 		<div class="alert alert-primary alert-dismissible alert-danger" role="alert"
-			id="invalid-msg">
-			<strong>Invalid input data:</strong> Your player name should be at least 3 chars and you should add the date of your birth.
+			id="invalid-sign-up-msg" th:if="${param.invalidSignUp}">
+			<strong>Invalid player name:</strong> Your player name should be unique and at least 3 chars long.
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+		
+		<div class="alert alert-primary alert-dismissible alert-danger" role="alert"
+			id="invalid-sign-in-msg" th:if="${param.invalidSignIn}">
+			<strong>Invalid player name:</strong> You should regist your player name for the game.
 			<button type="button" class="btn-close" data-bs-dismiss="alert"
 				aria-label="Close"></button>
 		</div>
@@ -69,12 +83,7 @@
 						name="playerName" title="Your nickname in the game">
 					<div id="emailHelp" class="form-text col"></div>
 				</div>
-				<div class="mb-3">
-					<label for="exampleInputPassword1" class="form-label">Date
-						of your birth</label> <input type="date" class="form-control"
-						id="exampleInputPassword1" name="birthDate"
-						title="Date of your birth">
-				</div>
+				
 				<div class="mb-3 form-check">
 					<input type="checkbox" class="form-check-input" id="exampleCheck1"
 						name="getSound" title="Dead Can Dance: Saltarello"> <label
@@ -85,8 +94,10 @@
 		</div>
 
 	</div>
-
-	<input type="hidden" th:if="${param.invalid}" name="invalid-msg" id="invalid">
+	<form th:action="@{/webtris/player-sign-up}" method="post" id="reg-form">
+	<input type="hidden" name="regName" id="reg-name" value="faszom">
+	</form>
+	
 	<script type="text/javascript" th:src="@{/bin/login.js}"></script>
 	<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
 </body>

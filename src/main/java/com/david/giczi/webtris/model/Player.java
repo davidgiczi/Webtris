@@ -1,7 +1,6 @@
 package com.david.giczi.webtris.model;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,8 +17,6 @@ public class Player implements Comparable<Player> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date birthDate;
 	private int score;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private ZonedDateTime scoreDate;
@@ -40,14 +37,6 @@ public class Player implements Comparable<Player> {
 		this.name = name;
 	}
 	
-	public Date getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
-	}
-
 	public ZonedDateTime getScoreDate() {
 		
 		return scoreDate;

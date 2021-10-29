@@ -1,10 +1,7 @@
 package com.david.giczi.webtris.service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.david.giczi.webtris.model.Player;
@@ -20,20 +17,27 @@ public class PlayerService {
 		playerRepo.save(player);
 	}
 	
-	public Player getPlayerByNameAndBirthDate(String name, String birthDate) throws ParseException {
+	public Player getPlayerByName(String name) throws ParseException {
 		
-		Date dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(birthDate);
-		Player player = playerRepo.getPlayerByNameAndBirthDate(name, dateOfBirth);
+		Player player = playerRepo.getPlayerByName(name);
 		
 		return player;
 	}
 	
-	public Long getPlayerIdByNameAndBirthDate(String name, Date birthDate) {
-		return playerRepo.getPlayerIdByNameAndBirthDate(name, birthDate);
+	public Long getPlayerIdByName(String name) {
+		return playerRepo.getPlayerIdByName(name);
 	}
 	
-	public boolean validateInputData(String name, String birthdate) {
-		return name.trim().length() > 3 && !birthdate.isEmpty();
+	public boolean validateInputData(String name) {
+		
+		return name.trim().length() > 3 && getAllPlayers().stream().allMatch(p -> !p.getName().equals(name));
+		
+	}
+	
+	public boolean validateRegisteredName(String name) {
+		
+		return getAllPlayers().stream().anyMatch(p -> p.getName().equals(name));
+		
 	}
 	
 	public int getScoreById(String id) {

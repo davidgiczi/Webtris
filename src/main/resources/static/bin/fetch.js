@@ -173,6 +173,16 @@ function displayData(){
 		
 		dataStore[3].then(data => {
 			
+			if(data.theEnd){
+			endOfTheGame(data);
+			getInitData().then(data =>{
+			displayActualShape(data);
+			displayNextShape(data);
+			displayScore(data);
+		});
+			return;
+			}
+			
 			refreshDisplayer(data);
 			displayActualShape(data);
 			displayScore(data);
@@ -192,7 +202,6 @@ function displayData(){
 				displayShapeStore(data);
 			}
 			
-			endOfTheGame(data);
 					
 		}	
 			)	
@@ -203,31 +212,16 @@ function displayData(){
 
 
 function endOfTheGame(game){
-	
-	if(game.theEnd){
 		
 		clearInterval(playingGame);
-		let scoreResult = game.score;
-		alert("The End! Next one?\n" +
-		"Your actual score is: " + scoreResult +".");
-		
+		clearDisplayer();
+		clearNextShapeDisplayer();
 		let startBtn = document.querySelector(".btn-start-stop");
 		startBtn.innerText = "Start";
 		startBtn.classList.remove("btn-danger");
 		startBtn.classList.add("btn-success");
-		
-		clearDisplayer();
-		clearNextShapeDisplayer();
-		
-		getInitData().then(data =>{
-	
-		displayActualShape(data);
-		displayNextShape(data);
-		displayScore(data);
-});
-		
-	}
-	
+		alert("The End! Next one?\n" +
+		"Your actual score is: " + game.score +".");
 }
 
 function clearDataStore(){

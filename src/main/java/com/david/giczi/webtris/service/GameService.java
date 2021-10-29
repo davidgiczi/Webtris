@@ -27,7 +27,7 @@ public class GameService {
 	@Autowired
 	private PlayerService playerService;
 
-	public DisplayerData initGame(HttpServletRequest request, String playerId) {
+	public synchronized DisplayerData initGame(HttpServletRequest request, String playerId) {
 		
 		AbstractShape actualShape = ShapeFactory.getShape();
 		AbstractShape nextShape = ShapeFactory.getShape();
@@ -44,6 +44,7 @@ public class GameService {
 		createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
 		createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
 		displayerData.setScore(0);
+		displayerData.setTheEnd(false);
 		
 		return displayerData;
 	}
@@ -170,11 +171,12 @@ public class GameService {
 				calcScore(gameState);
 				displayerData.setTheEnd(true);
 				Player player = playerService.getPlayerById(playerId);
-				int maxScore = player.getScore() < logic.getScore() ? logic.getScore() : player.getScore();
-				player.setScore(maxScore);
+				if(player.getScore() < logic.getScore()) {
+				player.setScore(logic.getScore());
 				long m = System.currentTimeMillis();
 				player.setScoreDate(ZonedDateTime.ofInstant(Instant.ofEpochMilli(m), ZoneId.systemDefault()));
 				playerService.save(player);
+				}
 			}
 			else {
 				 calcScore(gameState);

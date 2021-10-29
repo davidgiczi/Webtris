@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+.regist{
+	cursor: pointer;
+}
 .git {
 	
 	color: gray;
