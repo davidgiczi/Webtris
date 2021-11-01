@@ -9,7 +9,7 @@ public class DisplayerData {
 	private List<Integer> displayedPositions;
 	private List<ShapeData> shapeStore;
 	private int score;
-	private boolean isTheEnd;
+	private boolean isGameOver;
 	
 
 	public DisplayerData() {
@@ -61,13 +61,21 @@ public class DisplayerData {
 	}
 
 
-	public boolean isTheEnd() {
-		return isTheEnd;
+	public boolean isGameOver() {
+		return isGameOver;
 	}
 
 
-	public void setTheEnd(boolean isTheEnd) {
-		this.isTheEnd = isTheEnd;
+	public void setGameOver(boolean isGameOver) {
+		this.isGameOver = isGameOver;
+	}
+
+
+	@Override
+	public String toString() {
+		return "DisplayerData [actualShape=" + actualShape + ", nextShape=" + nextShape + ", displayedPositions="
+				+ displayedPositions + ", shapeStore=" + shapeStore + ", score=" + score + ", isGameOver=" + isGameOver
+				+ "]";
 	}
 
 	

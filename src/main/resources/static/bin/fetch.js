@@ -1,11 +1,14 @@
 /**
  * 
  */
+ 
+ /**
+ * 
+ */
  let speed = 500;
  let instructions = ["step"];
  let dataStore = [null, null, null, null];
  let playingGame;
- 
  
  let fecthOptions = {
 	
@@ -172,21 +175,18 @@ function displayData(){
 		else if (dataStore[3] !== null && instruction === "step"){
 		
 		dataStore[3].then(data => {
-			
-			if(data.theEnd){
+	
+	if(data.actualShape !== null){
+	
+		if(data.gameOver){
 			endOfTheGame(data);
-			getInitData().then(data =>{
-			displayActualShape(data);
-			displayNextShape(data);
-			displayScore(data);
-		});
-			return;
-			}
-			
+		}
+		else {
 			refreshDisplayer(data);
 			displayActualShape(data);
 			displayScore(data);
-			
+		
+		
 			if(data.nextShape !== null){
 				
 				clearNextShapeDisplayer();
@@ -200,18 +200,19 @@ function displayData(){
 				displayNextShape(data);
 				clearDisplayer();
 				displayShapeStore(data);
-			}
-			
-					
-		}	
+		}
+			}	
+				}
+					}		
 			)	
 	}
-			
+	
+	
 			clearDataStore();				
 }
 
 
-function endOfTheGame(game){
+function endOfTheGame(data){
 		
 		clearInterval(playingGame);
 		clearDisplayer();
@@ -220,8 +221,13 @@ function endOfTheGame(game){
 		startBtn.innerText = "Start";
 		startBtn.classList.remove("btn-danger");
 		startBtn.classList.add("btn-success");
-		alert("The End! Next one?\n" +
-		"Your actual score is: " + game.score +".");
+		alert("Game Over! Next one?\nYour actual score is: " + data.score +".");
+		getInitData().then(data =>{
+	
+	displayActualShape(data);
+	displayNextShape(data);
+	displayScore(data);
+});
 }
 
 function clearDataStore(){

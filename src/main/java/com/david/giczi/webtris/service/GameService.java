@@ -39,12 +39,12 @@ public class GameService {
 		gameState.setLogicBoard(logicBoard);
 		gameState.setShapeStore(shapeStore);
 		gameState.setScore(0);
+		gameState.setGameOver(false);
 		request.getSession().setAttribute(playerId, gameState);
 		DisplayerData displayerData = new DisplayerData();
 		createActualShapeOfDisplayerDataFromActualShapeOfGameState(gameState, displayerData);
 		createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
 		displayerData.setScore(0);
-		displayerData.setTheEnd(false);
 		
 		return displayerData;
 	}
@@ -151,39 +151,38 @@ public class GameService {
 		List<ShapePosition> deletedPositions = new ArrayList<>();
 		DisplayerData displayerData = new DisplayerData();
 		logic.setLogicBoard(gameState.getLogicBoard());
+		List<Integer> fullRowIndexStore = logic.getCompleteTrueRowsIndex();	
 		
-		if (logic.canShapeBeMovedToDown(gameState.getActualShape())) {
+		if(gameState.isGameOver()) {
+			return displayerData;
+		}
+		else if( !fullRowIndexStore.isEmpty() ) {
+			runFullRowProcess(gameState, fullRowIndexStore);
+			getNextRound(gameState);
+			createDisplayerDataInCaseOfFullRow(gameState, displayerData);
+			createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
+		}
+		else if (!logic.canShapeBeMovedToDown(gameState.getActualShape()) && logic.isGameOver()){
+			calcScore(gameState);
+			gameState.setGameOver(true);
+			displayerData.setGameOver(true);
+			Player player = playerService.getPlayerById(playerId);
+			if(player.getScore() < logic.getScore()) {
+			player.setScore(logic.getScore());
+			long m = System.currentTimeMillis();
+			player.setScoreDate(ZonedDateTime.ofInstant(Instant.ofEpochMilli(m), ZoneId.systemDefault()));
+			playerService.save(player);
+	}
+		}
+		else if(logic.canShapeBeMovedToDown(gameState.getActualShape())) {
 			
-			deletedPositions = fallDown(gameState, deletedPositions);			
+			deletedPositions = fallDown(gameState, deletedPositions);
+		}
+		else {
 			
-		} else {
-			
-			List<Integer> fullRowIndexStore = logic.getCompleteTrueRowsIndex();	
-			
-			if( !fullRowIndexStore.isEmpty() ) {
-				
-				runFullRowProcess(gameState, fullRowIndexStore);
-				getNextRound(gameState);
-				createDisplayerDataInCaseOfFullRow(gameState, displayerData);
-				createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
-			}
-			else if (logic.isTheEndOfTheGame()){
-				calcScore(gameState);
-				displayerData.setTheEnd(true);
-				Player player = playerService.getPlayerById(playerId);
-				if(player.getScore() < logic.getScore()) {
-				player.setScore(logic.getScore());
-				long m = System.currentTimeMillis();
-				player.setScoreDate(ZonedDateTime.ofInstant(Instant.ofEpochMilli(m), ZoneId.systemDefault()));
-				playerService.save(player);
-				}
-			}
-			else {
-				 calcScore(gameState);
-				 getNextRound(gameState);
-				 createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
-			}
-			
+			 calcScore(gameState);
+			 getNextRound(gameState);
+			 createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
 		}
 		
 		request.getSession().setAttribute(playerId, gameState);

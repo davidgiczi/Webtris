@@ -55,9 +55,9 @@ public class TetrisLogic {
     public void setShapeStore(List<AbstractShape> shapeStore) {
         this.shapeStore = shapeStore;
     }
-   
     
-    public void clearLogicBoard() {
+
+	public void clearLogicBoard() {
 
         for (int i = 0;
                 i < ShapePosition.WIDTH_OF_BOARD * ShapePosition.LENGTH_OF_BOARD; i++) {
@@ -1540,14 +1540,14 @@ public class TetrisLogic {
     }
 
     
-    public boolean isTheEndOfTheGame() {
+    public boolean isGameOver() {
 
         for (int i = 0; i < ShapePosition.WIDTH_OF_BOARD; i++) {
             if (logicBoard.get(i)) {
                 return true;
             }
         }
-
+        
         return false;
     }
 

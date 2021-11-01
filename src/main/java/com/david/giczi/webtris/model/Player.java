@@ -1,5 +1,6 @@
 package com.david.giczi.webtris.model;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,6 +39,10 @@ public class Player implements Comparable<Player> {
 	}
 	
 	public ZonedDateTime getScoreDate() {
+		
+		if(scoreDate != null) {
+			return scoreDate.withZoneSameInstant(ZoneId.of("Europe/Budapest"));
+			}
 		
 		return scoreDate;
 	}

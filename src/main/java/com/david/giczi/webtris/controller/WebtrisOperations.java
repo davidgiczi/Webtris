@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.david.giczi.webtris.model.DisplayerData;
+import com.david.giczi.webtris.model.GameState;
 import com.david.giczi.webtris.service.GameService;
 
 @RestController
@@ -62,10 +63,14 @@ public class WebtrisOperations {
 	@GetMapping("/step")
 	public ResponseEntity<DisplayerData> playGame(@CookieValue(value = "playerId") String playerId, HttpServletRequest request){
 		
+		GameState gameState = (GameState) request.getSession().getAttribute(playerId);
+		DisplayerData displayerData = gameService.playGame(request, playerId);
 		
-		DisplayerData data = gameService.playGame(request, playerId);
+		if(gameState.isGameOver() && !displayerData.isGameOver()) {
+			displayerData = gameService.playGame(request, playerId);
+		}
 		
-		return new ResponseEntity<DisplayerData>(data, HttpStatus.OK);
+		return new ResponseEntity<DisplayerData>(displayerData, HttpStatus.OK);
 	}
 	
 	@GetMapping("/save")
@@ -75,4 +80,6 @@ public class WebtrisOperations {
 		
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
+	
+	
 }

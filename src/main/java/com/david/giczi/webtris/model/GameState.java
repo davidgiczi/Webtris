@@ -12,6 +12,7 @@ public class GameState {
 	private List<AbstractShape> shapeStore;
 	private List<Boolean> logicBoard;
 	private int score;
+	private boolean isGameOver;
 	
 	
 	public GameState() {
@@ -65,4 +66,15 @@ public class GameState {
 		this.score = score;
 	}
 
+
+	public boolean isGameOver() {
+		return isGameOver;
+	}
+
+
+	public void setGameOver(boolean isGameOver) {
+		this.isGameOver = isGameOver;
+	}
+	
+	
 }
