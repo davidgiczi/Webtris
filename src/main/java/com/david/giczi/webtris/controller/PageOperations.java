@@ -64,6 +64,7 @@ public class PageOperations {
 	public String signInPlayer(HttpServletRequest request, HttpServletResponse response, RedirectAttributes rdAttr, Model model) throws ParseException {
 
 		String playerName = request.getParameter("playerName");
+		String sound = request.getParameter("getSound");
 		
 		if(playerService.validateRegisteredName(playerName)) {
 		
@@ -77,6 +78,11 @@ public class PageOperations {
 
 		model.addAttribute("welcome", "Hi " + player.getName() + ", you're welcome to W E B T R I S Game!\n"
 					+ "Your highest score is: " + player.getScore());
+		
+		if(sound != null) {
+			model.addAttribute("sound", true);
+		}
+		
 		}
 		else {
 			rdAttr.addAttribute("invalidSignIn", true);

@@ -15,15 +15,21 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-light nav">
 		<div class="container-fluid row">
 		
-			<div class="col-6 col-xxl-1">
+			<div class="col-3 col-xxl-1">
 				<a class="nav-link git speed" href="#" onclick="growSpeed()"
 					tabindex="-1" aria-disabled="true"
-					title="Speed growing">Speed: 1</a>
+					title="Speed growing">Speed:1</a>
 			</div>
 			
-				<div class="col-4 col-xxl-10"></div>
+			<div class="col-3 col-xxl-2">
+				<a class="nav-link git speed sound" href="#" onclick="stopStartAudio()"
+					tabindex="-1" aria-disabled="true"
+					title="Speed growing">Sound:On</a>
+			</div>
 				
-				<div class="col-2 col-xxl-1">
+				<div class="col-3 col-xxl-8"></div>
+				
+				<div class="col-3 col-xxl-1">
 				<a class="nav-link git" onclick="saveActualScore()" href="/webtris"
 					tabindex="-1" aria-disabled="true"
 					title="Go Startpage of the Game">Home</a>
@@ -83,8 +89,10 @@
 	</div>
 	
 	<input type="hidden" th:if="${welcome != null}" th:value="${welcome}" id="welcome-msg"> 
+	<input type="hidden" th:if="${sound}" id="playSound">
 	
 	<script type="text/javascript" th:src="@{/bin/fetch.js}"></script>
+	<script type="text/javascript" th:src="@{/bin/sound.js}"></script>
 	<script type="text/javascript" th:src="@{/bin/gameboard.js}"></script>
 	<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
 </body>
