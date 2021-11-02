@@ -156,17 +156,18 @@ public class GameService {
 		if(gameState.isGameOver()) {
 			return displayerData;
 		}
-		else if( !fullRowIndexStore.isEmpty() ) {
+		else if( !logic.canShapeBeMovedToDown(gameState.getActualShape()) && !fullRowIndexStore.isEmpty() ) {
 			runFullRowProcess(gameState, fullRowIndexStore);
 			getNextRound(gameState);
 			createDisplayerDataInCaseOfFullRow(gameState, displayerData);
 			createNextShapeOfDisplayerDataFromNextShapeOfGameState(gameState, displayerData);
 		}
-		else if (!logic.canShapeBeMovedToDown(gameState.getActualShape()) && logic.isGameOver()){
+		else if ( !logic.canShapeBeMovedToDown(gameState.getActualShape()) && logic.isGameOver() ){
 			calcScore(gameState);
 			gameState.setGameOver(true);
 			displayerData.setGameOver(true);
 			Player player = playerService.getPlayerById(playerId);
+			
 			if(player.getScore() < logic.getScore()) {
 			player.setScore(logic.getScore());
 			long m = System.currentTimeMillis();
