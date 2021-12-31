@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Collections;
 import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.david.giczi.webtris.model.Player;
+import com.david.giczi.webtris.service.GameService;
 import com.david.giczi.webtris.service.PlayerService;
 
 @Controller
@@ -24,6 +27,8 @@ public class PageOperations {
 
 	@Autowired
 	private PlayerService playerService;
+	@Autowired
+	private GameService gameService;
 
 	@RequestMapping("")
 	public String goLoginPage() {
@@ -34,7 +39,6 @@ public class PageOperations {
 	public String goRankListPage(Model model) {
 		
 		List<Player> players = playerService.getAllPlayers();
-		Collections.sort(players);
 		model.addAttribute("players", players);
 	
 		return "ranklist";
@@ -52,6 +56,8 @@ public class PageOperations {
 		long m = System.currentTimeMillis();
 		player.setScoreDate(ZonedDateTime.ofInstant(Instant.ofEpochMilli(m), ZoneId.systemDefault()));
 		playerService.save(player);
+		rdAttr.addAttribute("canEnter", true);
+		rdAttr.addAttribute("player", player.getName());
 		return "redirect:";
 	}
 	
@@ -69,9 +75,19 @@ public class PageOperations {
 		if(playerService.validateRegisteredName(playerName)) {
 		
 		Player player = playerService.getPlayerByName(playerName);
+		
+		if(player.isPlaying()) {
+			rdAttr.addAttribute("isPlaying", true);
+			rdAttr.addAttribute("player", player.getName());
+			return "redirect:";
+		}
+		else {
+			player.setPlaying(true);
+			playerService.save(player);
+		}
 
 		Long playerId = playerService.getPlayerIdByName(playerName);
-			
+	
 		Cookie cookie = new Cookie("playerId", String.valueOf(playerId));
 			
 		response.addCookie(cookie);
@@ -93,5 +109,23 @@ public class PageOperations {
 		return "gameboard";
 	}
 
+	@GetMapping("/save")
+	public String saveActualScore(@CookieValue(value = "playerId") String playerId, HttpServletRequest request){
+		
+		gameService.saveActualScore(request, playerId);
+		
+		return "redirect:";
+	}
 
+	@GetMapping("/enter")
+	public String enterIntoGame(@RequestParam String id, RedirectAttributes rdAttr) {
+		
+		Player player = playerService.getPlayerById(id);
+		player.setPlaying(false);
+		playerService.save(player);
+		rdAttr.addAttribute("canEnter", true);
+		rdAttr.addAttribute("player", player.getName());
+		
+		return "redirect:";
+	}
 }

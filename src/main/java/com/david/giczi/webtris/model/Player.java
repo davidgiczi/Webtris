@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "Players")
-public class Player implements Comparable<Player> {
+public class Player {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +21,7 @@ public class Player implements Comparable<Player> {
 	private int score;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private ZonedDateTime scoreDate;
+	private boolean isPlaying;
 	
 	public Player() {
 	}
@@ -57,11 +58,13 @@ public class Player implements Comparable<Player> {
 	public void setScore(int score) {
 		this.score = score;
 	}
-
-
-	@Override
-	public int compareTo(Player o) {
-		return this.getScore() < o.getScore() ? 1 : this.getScore() == o.getScore() ? 0 : -1;
-	}
 	
+	public boolean isPlaying() {
+		return isPlaying;
+	}
+
+	public void setPlaying(boolean isPlaying) {
+		this.isPlaying = isPlaying;
+	}
+
 }

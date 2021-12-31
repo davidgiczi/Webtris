@@ -81,13 +81,7 @@ public class WebtrisRestOperations {
 		return new ResponseEntity<DisplayerData>(displayerData, HttpStatus.OK);
 	}
 	
-	@GetMapping("/save")
-	public ResponseEntity<Object> saveActualScore(@CookieValue(value = "playerId") String playerId, HttpServletRequest request){
-		
-		gameService.saveActualScore(request, playerId);
-		
-		return new ResponseEntity<Object>(HttpStatus.OK);
-	}
+	
 	
 	@GetMapping(value = "/sound", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE })
         public ResponseEntity<InputStreamResource> playAudio(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {

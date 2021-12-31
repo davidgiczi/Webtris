@@ -20,6 +20,7 @@ public interface PlayerRepository extends CrudRepository<Player, Long> {
 	@Query(value = "select score from players where id = :id" , nativeQuery = true)
 	int getScoreById(@Param("id") String playerId);
 	
+	@Query(value = "select * from players order by score desc" , nativeQuery = true)
 	List<Player> findAll();
 	
 	Optional<Player> findById(Long id);

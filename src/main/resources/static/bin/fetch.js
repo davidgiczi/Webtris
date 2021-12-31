@@ -10,6 +10,44 @@
  let dataStore = [null, null, null, null];
  let playingGame;
  
+document.addEventListener("keydown", pressButton);
+
+function pressButton(e) {
+	
+	let startBtnText = document.querySelector(".btn-start-stop").innerText;
+	
+    e = e || window.event;
+
+	if (e.keyCode === 37 && startBtnText === "Stop" && dataStore[0] === null) {
+		
+		instructions.unshift("left");
+		dataStore[0] = sendOption("left");
+		
+	}
+	else if (e.keyCode === 38 && startBtnText === "Stop" && dataStore[1] === null) {
+     
+		instructions.unshift("rotate");
+		dataStore[1] = sendOption("rotate");
+		
+	}
+	else if (e.keyCode === 39 && startBtnText === "Stop" && dataStore[2] === null) {
+		
+		instructions.unshift("right");
+		dataStore[2] = sendOption("right");
+	
+	}
+	else if (e.keyCode === 40 && startBtnText === "Stop") {
+		
+		sendOption("fallDown").then(data => {
+		
+			refreshDisplayer(data);
+			displayActualShape(data);
+		});
+		
+	}
+ 	
+}
+ 
  let fecthOptions = {
 	
 	method: 'GET',
@@ -134,47 +172,41 @@ function stepNext(instruction){
 			instructions.push("step");
 		}
 	}
+	
+function stepLeft(){
 
-function displayData(){
-		
-		let instruction = instructions.shift();
-		
-		stepNext(instruction);
-		
-		if(dataStore[0] !== null && instruction === "left"){
-			
-			dataStore[0].then(data => {
+	dataStore[0].then(data => {
 			
 			refreshDisplayer(data);
 			displayActualShape(data);
 		}	
 			)
-			
-		}
-		else if(dataStore[1] !== null && instruction === "rotate"){
-			
-			dataStore[1].then(data => {
-		
-			refreshDisplayer(data);
-			displayActualShape(data);
-		}	
-			)
-			
-		}
-		else if(dataStore[2] !== null && instruction === "right"){
-			
-			dataStore[2].then(data => {
+}
+
+function stepRight(){
+	
+	dataStore[2].then(data => {
 			
 			refreshDisplayer(data);
 			displayActualShape(data);
 
 		}	
 			)
-			
-		}
-		else if (dataStore[3] !== null && instruction === "step"){
+}
+
+function rotate(){
+
+dataStore[1].then(data => {
 		
-		dataStore[3].then(data => {
+			refreshDisplayer(data);
+			displayActualShape(data);
+		}	
+			)
+}
+
+function stepDown(){
+
+	dataStore[3].then(data => {
 	
 	if(data.actualShape !== null){
 	
@@ -205,8 +237,33 @@ function displayData(){
 				}
 					}		
 			)	
+}
+
+function displayData(){
+		
+		let instruction = instructions.shift();
+		
+		stepNext(instruction);
+		
+		if(dataStore[0] !== null && instruction === "left"){
+			
+			stepLeft();
+			
+		}
+		else if(dataStore[1] !== null && instruction === "rotate"){
+			
+			rotate();
+			
+		}
+		else if(dataStore[2] !== null && instruction === "right"){
+			
+			stepRight();
+			
+		}
+		else if (dataStore[3] !== null && instruction === "step"){
+		
+			stepDown();
 	}
-	
 	
 			clearDataStore();				
 }

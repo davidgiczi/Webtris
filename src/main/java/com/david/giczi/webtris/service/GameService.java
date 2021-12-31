@@ -154,6 +154,7 @@ public class GameService {
 		List<Integer> fullRowIndexStore = logic.getCompleteTrueRowsIndex();	
 		
 		if(gameState.isGameOver()) {
+			request.getSession().setAttribute(playerId, null);
 			return displayerData;
 		}
 		else if( !logic.canShapeBeMovedToDown(gameState.getActualShape()) && !fullRowIndexStore.isEmpty() ) {
@@ -295,13 +296,14 @@ public class GameService {
 		
 		GameState gameState = (GameState) request.getSession().getAttribute(playerId);
 		Player player = playerService.getPlayerById(playerId);
+		player.setPlaying(false);
 		
 		if(gameState.getScore() > player.getScore()) {
 			player.setScore(gameState.getScore());
 			long m = System.currentTimeMillis();
 			player.setScoreDate(ZonedDateTime.ofInstant(Instant.ofEpochMilli(m), ZoneId.systemDefault()));
-			playerService.save(player);
 		}
+		playerService.save(player);
 	}
-		
+
 }

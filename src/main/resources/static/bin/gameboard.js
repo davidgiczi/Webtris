@@ -1,7 +1,7 @@
 /**
  * 
  */
-
+  
  if(document.getElementById("welcome-msg") != null){
     let msg = document.getElementById("welcome-msg").value;
     alert(msg);
@@ -28,10 +28,13 @@ if(screen.width < 576){
 let tds= document.getElementsByTagName("td");
 document.querySelector(".gameboard").style.width = "25%";
 for(let i = 0; i < tds.length; i++){
-	tds[i].style.height = "18px";
-	
+	tds[i].style.height = "18px";	
 }
 
+}
+
+function enterIntoGame(){
+alert("Heloo");
 }
 
 function saveActualScore(){

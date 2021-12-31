@@ -70,6 +70,20 @@
 			<button type="button" class="btn-close" data-bs-dismiss="alert"
 				aria-label="Close"></button>
 		</div>
+		
+		<div class="alert alert-primary alert-dismissible alert-danger" role="alert"
+			id="invalid-sign-in-msg" th:if="${param.isPlaying}">
+			<strong th:text="${param.player} + ' is playing: '"></strong>You cannot start the game by this name.
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+		
+		<div class="alert alert-primary alert-dismissible alert-success" role="alert"
+			id="invalid-sign-in-msg" th:if="${param.canEnter}">
+			<strong th:text="${param.player} + ' can enter: '"></strong>You can enter into the game.
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
 
 		<div class="row">
 			<div class="col-12 col-xxl-4"></div>

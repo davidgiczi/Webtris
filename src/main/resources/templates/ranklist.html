@@ -40,7 +40,8 @@
 			<tbody>
 			<tr th:each="player : ${players}" th:classappend="${playerStat.odd ? '' : 'table-success'}">
 			<td th:text="${playerStat.count}"></td>
-			<td th:text="${player.name}"></td>
+			<td th:text="${player.name}" th:onclick="'enterIntoGame(\'' + ${player.id} + '\');'"
+				title="If you cannot enter into the game click on the text of your name and try again" class="regist"></td>
 			<td th:text="${player.score}"></td>
 			<td th:text="${#temporals.format(player.scoreDate, 'yyyy-MM-dd HH:mm')}"></td>
 			</tr>
@@ -49,5 +50,6 @@
 	</div>
     
     <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{/bin/ranklist.js}"></script>
 </body>
 </html>
