@@ -151,10 +151,9 @@ public class GameService {
 		List<ShapePosition> deletedPositions = new ArrayList<>();
 		DisplayerData displayerData = new DisplayerData();
 		logic.setLogicBoard(gameState.getLogicBoard());
-		List<Integer> fullRowIndexStore = logic.getCompleteTrueRowsIndex();	
+		List<Integer> fullRowIndexStore = logic.getCompleteTrueRowsIndex();
 		
 		if(gameState.isGameOver()) {
-			request.getSession().setAttribute(playerId, null);
 			return displayerData;
 		}
 		else if( !logic.canShapeBeMovedToDown(gameState.getActualShape()) && !fullRowIndexStore.isEmpty() ) {

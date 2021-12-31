@@ -10,6 +10,7 @@ public class DisplayerData {
 	private List<ShapeData> shapeStore;
 	private int score;
 	private boolean isGameOver;
+	private boolean notPlaying;
 	
 
 	public DisplayerData() {
@@ -71,12 +72,13 @@ public class DisplayerData {
 	}
 
 
-	@Override
-	public String toString() {
-		return "DisplayerData [actualShape=" + actualShape + ", nextShape=" + nextShape + ", displayedPositions="
-				+ displayedPositions + ", shapeStore=" + shapeStore + ", score=" + score + ", isGameOver=" + isGameOver
-				+ "]";
+	public boolean isNotPlaying() {
+		return notPlaying;
 	}
 
-	
+
+	public void setNotPlaying(boolean notPlaying) {
+		this.notPlaying = notPlaying;
+	}
+
 }

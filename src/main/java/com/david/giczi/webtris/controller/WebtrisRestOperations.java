@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.david.giczi.webtris.model.DisplayerData;
 import com.david.giczi.webtris.model.GameState;
+import com.david.giczi.webtris.model.Player;
 import com.david.giczi.webtris.service.GameService;
+import com.david.giczi.webtris.service.PlayerService;
 
 @RestController
 @RequestMapping("/webtris")
@@ -26,6 +28,8 @@ public class WebtrisRestOperations {
 	
 	@Autowired
 	private GameService gameService;
+	@Autowired
+	private PlayerService playerService;
 	
 
 	@GetMapping("/start")
@@ -73,8 +77,12 @@ public class WebtrisRestOperations {
 		
 		GameState gameState = (GameState) request.getSession().getAttribute(playerId);
 		DisplayerData displayerData = gameService.playGame(request, playerId);
+		Player player = playerService.getPlayerById(playerId);
 		
-		if(gameState.isGameOver() && !displayerData.isGameOver()) {
+		if(!player.isPlaying()) {
+			displayerData.setNotPlaying(true);
+		}
+		else if(gameState.isGameOver() && !displayerData.isGameOver()) {
 			displayerData = gameService.playGame(request, playerId);
 		}
 		

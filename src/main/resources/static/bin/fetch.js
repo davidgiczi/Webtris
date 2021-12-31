@@ -207,6 +207,11 @@ dataStore[1].then(data => {
 function stepDown(){
 
 	dataStore[3].then(data => {
+		
+	if(data.notPlaying){
+	location.href = location.origin + "/webtris/save";
+	return;
+	}
 	
 	if(data.actualShape !== null){
 	
